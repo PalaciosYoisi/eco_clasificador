@@ -1,0 +1,29 @@
+{
+  "class_indices": {
+    "bolsas_plastico": 0,
+    "botellas_plastico": 1,
+    "envases_plastico": 2,
+    "organic": 3,
+    "papel": 4,
+    "recyclable": 5,
+    "residuos_medicos": 6,
+    "tetra_pack": 7,
+    "vasos_papel": 8,
+    "vidrio": 9
+  },
+  "img_height": 160,
+  "img_width": 160,
+  "accuracy_final": 0.8251,
+  "classes": [
+    "bolsas_plastico",
+    "botellas_plastico",
+    "envases_plastico",
+    "organic",
+    "papel",
+    "recyclable",
+    "residuos_medicos",
+    "tetra_pack",
+    "vasos_papel",
+    "vidrio"
+  ]
+}

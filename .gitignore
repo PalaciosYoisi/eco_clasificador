@@ -1,0 +1,15 @@
+bolsas_plastico/
+botellas_plastico/
+envases_plastico/
+organic/
+papel/
+reciclable/
+residuos_medicos/
+temp/
+tetra_pack/
+uploads/
+vasos_papel/
+vidrio/
+
+# Archivos de configuración sensible
+.env
