@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoClasificador - Gestión Inteligente de Residuos</title>
+    <meta name="theme-color" content="#0c2417">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* =============================================
+           TOKENS
+           ============================================= */
+        :root {
+            /* Variables originales (se conservan: las usa el JS) */
+            --primary-color: #1f7a3a;
+            --secondary-color: #2e9a4c;
+            --accent-color: #b4ec51;
+            --light-color: #e9f6e3;
+            --dark-color: #0c2417;
+            --text-color: #16261b;
+            --white: #ffffff;
+
+            /* Nuevos */
+            --forest: #0c2417;
+            --pine: #123a24;
+            --moss: #1f7a3a;
+            --lime: #b4ec51;
+            --lime-deep: #8fd129;
+            --cream: #f6f4ea;
+            --paper: #fffdf7;
+            --ink: #16261b;
+            --muted: #5d6b60;
+            --line: rgba(12, 36, 23, .10);
+
+            --font-display: 'Bricolage Grotesque', 'Segoe UI', sans-serif;
+            --font-body: 'DM Sans', 'Segoe UI', sans-serif;
+
+            --r-sm: 14px;
+            --r-md: 22px;
+            --r-lg: 32px;
+
+            --shadow-light: 0 1px 2px rgba(12,36,23,.05), 0 8px 24px -8px rgba(12,36,23,.12);
+            --shadow-hover: 0 2px 4px rgba(12,36,23,.06), 0 24px 48px -16px rgba(12,36,23,.28);
+
+            --ease: cubic-bezier(.22, 1, .36, 1);
+            --header-h: 84px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--ink);
+            background: var(--cream);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.1; letter-spacing: -.02em; }
+        a { color: inherit; }
+        strong { font-weight: 700; }
+
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+        section { padding: 7rem 0; position: relative; scroll-margin-top: 20px; }
+
+        ::selection { background: var(--lime); color: var(--forest); }
+
+        :focus-visible { outline: 3px solid var(--lime-deep); outline-offset: 3px; border-radius: 6px; }
+
+        /* Barra de progreso de scroll */
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+            transform-origin: 0 50%; transform: scaleX(0);
+            background: linear-gradient(90deg, var(--moss), var(--lime));
+            z-index: 200;
+        }
+
+        /* =============================================
+           HEADER
+           ============================================= */
+        header {
+            position: fixed; top: 14px; left: 0; right: 0; z-index: 100;
+            pointer-events: none;
+        }
+
+        .header-content {
+            pointer-events: auto;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: .65rem .8rem .65rem 1.2rem;
+            border-radius: 999px;
+            background: rgba(12, 36, 23, .55);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            border: 1px solid rgba(255,255,255,.12);
+            color: var(--white);
+            transition: background .4s var(--ease), box-shadow .4s var(--ease), padding .4s var(--ease);
+        }
+
+        header.scrolled .header-content {
+            background: rgba(12, 36, 23, .88);
+            box-shadow: 0 16px 40px -12px rgba(12,36,23,.5);
+        }
+
+        .logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; transition: transform .3s var(--ease); }
+        .logo:hover { transform: scale(1.03); }
+
+        .logo i {
+            display: grid; place-items: center;
+            width: 38px; height: 38px; border-radius: 50%;
+            background: var(--lime); color: var(--forest);
+            font-size: 1.05rem;
+            transition: transform .6s var(--ease);
+        }
+        .logo:hover i { transform: rotate(-20deg) scale(1.1); }
+
+        .logo h1 { font-size: 1.25rem; font-weight: 700; letter-spacing: -.02em; }
+        .logo h1 span { color: var(--lime); }
+
+        nav ul { display: flex; list-style: none; gap: .25rem; }
+
+        nav ul li a {
+            position: relative; display: block;
+            padding: .55rem 1rem; border-radius: 999px;
+            color: rgba(255,255,255,.78);
+            text-decoration: none; font-weight: 500; font-size: .93rem;
+            transition: color .25s, background .25s;
+        }
+        nav ul li a:hover { color: var(--white); background: rgba(255,255,255,.08); }
+        nav ul li a.active { color: var(--forest); background: var(--lime); font-weight: 600; }
+
+        .nav-cta {
+            display: inline-flex; align-items: center; gap: .5rem;
+            padding: .6rem 1.2rem; border-radius: 999px;
+            background: var(--lime); color: var(--forest);
+            font-weight: 700; font-size: .9rem; text-decoration: none;
+            transition: transform .3s var(--ease), box-shadow .3s;
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -6px rgba(180,236,81,.7); }
+
+        .nav-actions { display: flex; align-items: center; gap: .6rem; }
+
+        .menu-toggle {
+            display: none; width: 42px; height: 42px; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.2); background: transparent;
+            color: var(--white); font-size: 1.05rem; cursor: pointer;
+        }
+
+        /* =============================================
+           BOTONES
+           ============================================= */
+        .btn {
+            position: relative; overflow: hidden;
+            display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+            background: var(--lime); color: var(--forest);
+            padding: 1rem 1.8rem;
+            border: none; border-radius: 999px;
+            text-decoration: none; font-family: var(--font-body);
+            font-weight: 700; font-size: 1rem; cursor: pointer;
+            transition: transform .35s var(--ease), box-shadow .35s var(--ease), background .3s;
+            box-shadow: 0 10px 30px -10px rgba(143,209,41,.8);
+        }
+        .btn::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%);
+            transform: translateX(-120%);
+            transition: transform .8s var(--ease);
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 18px 34px -10px rgba(143,209,41,.9); }
+        .btn:hover::after { transform: translateX(120%); }
+        .btn:active { transform: translateY(0) scale(.98); }
+        .btn i { transition: transform .35s var(--ease); }
+        .btn:hover i.fa-arrow-right, .btn:hover i.fa-arrow-down { transform: translateX(4px); }
+        .btn:hover i.fa-arrow-down { transform: translateY(4px); }
+
+        .btn:disabled { background: #cfd6cf; color: #7a857c; cursor: not-allowed; box-shadow: none; transform: none; }
+        .btn:disabled::after { display: none; }
+
+        .btn-ghost {
+            background: transparent; color: var(--white);
+            border: 1px solid rgba(255,255,255,.3); box-shadow: none;
+        }
+        .btn-ghost:hover { background: rgba(255,255,255,.1); box-shadow: none; }
+
+        .btn-outline {
+            background: transparent; color: var(--ink);
+            border: 1.5px solid var(--line); box-shadow: none;
+        }
+        .btn-outline:hover { background: var(--white); box-shadow: var(--shadow-light); }
+
+        /* =============================================
+           HERO
+           ============================================= */
+        .hero {
+            min-height: 100vh;
+            padding: calc(var(--header-h) + 5rem) 0 6rem;
+            background: var(--forest);
+            color: var(--white);
+            overflow: hidden;
+            display: flex; align-items: center;
+        }
+
+        .hero::before { /* foto original, ahora como textura sutil */
+            content: ''; position: absolute; inset: 0;
+            background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            opacity: .16; mix-blend-mode: luminosity;
+        }
+        .hero::after { /* granulado */
+            content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .07;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        .blob { position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; }
+        .blob.b1 { width: 520px; height: 520px; background: #1f7a3a; top: -140px; right: -80px; opacity: .75; animation: drift 14s ease-in-out infinite alternate; }
+        .blob.b2 { width: 380px; height: 380px; background: var(--lime); bottom: -160px; left: -80px; opacity: .22; animation: drift 17s ease-in-out infinite alternate-reverse; }
+        .blob.b3 { width: 280px; height: 280px; background: #0f9d6b; top: 35%; left: 38%; opacity: .25; animation: drift 20s ease-in-out infinite alternate; }
+
+        @keyframes drift {
+            from { transform: translate(0,0) scale(1); }
+            to   { transform: translate(-40px, 50px) scale(1.12); }
+        }
+
+        .hero .container {
+            position: relative; z-index: 2;
+            display: grid; grid-template-columns: 1.15fr .85fr; gap: 4rem; align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: .6rem;
+            padding: .4rem 1rem .4rem .5rem; border-radius: 999px;
+            font-size: .85rem; font-weight: 600; letter-spacing: .02em;
+        }
+        .hero .eyebrow { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.9); margin-bottom: 1.6rem; }
+        .eyebrow .dot {
+            width: 22px; height: 22px; border-radius: 50%;
+            background: var(--lime); position: relative;
+        }
+        .eyebrow .dot::after {
+            content: ''; position: absolute; inset: 0; border-radius: 50%;
+            background: var(--lime); animation: ping 2s var(--ease) infinite;
+        }
+        @keyframes ping { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(2.4); opacity: 0; } }
+
+        .hero h2 {
+            font-size: clamp(2.8rem, 6.2vw, 5.4rem);
+            font-weight: 800;
+            margin-bottom: 1.6rem;
+        }
+        .hero h2 .hl {
+            color: var(--lime); position: relative; white-space: nowrap;
+        }
+        .hero h2 .hl svg { position: absolute; left: 0; bottom: -.16em; width: 100%; height: .3em; overflow: visible; }
+        .hero h2 .hl path {
+            stroke: var(--lime); stroke-width: 5; fill: none; stroke-linecap: round;
+            stroke-dasharray: 320; stroke-dashoffset: 320;
+            animation: draw 1.4s .9s var(--ease) forwards;
+        }
+        @keyframes draw { to { stroke-dashoffset: 0; } }
+
+        .hero p.lead {
+            font-size: 1.2rem; color: rgba(255,255,255,.78);
+            max-width: 560px; margin-bottom: 2.4rem;
+        }
+        .hero p.lead strong { color: var(--white); }
+
+        .hero-actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-bottom: 3rem; }
+
+        .hero-trust { display: flex; flex-wrap: wrap; gap: 1.8rem; color: rgba(255,255,255,.7); font-size: .92rem; }
+        .hero-trust span { display: inline-flex; align-items: center; gap: .55rem; }
+        .hero-trust i { color: var(--lime); }
+
+        /* Entrada escalonada del hero */
+        .hero-in { opacity: 0; transform: translateY(28px); animation: rise .9s var(--ease) forwards; }
+        .hero-in:nth-child(1) { animation-delay: .05s; }
+        .hero-in:nth-child(2) { animation-delay: .15s; }
+        .hero-in:nth-child(3) { animation-delay: .27s; }
+        .hero-in:nth-child(4) { animation-delay: .39s; }
+        .hero-in:nth-child(5) { animation-delay: .5s; }
+        @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+        /* Tarjeta de escaneo (ilustración del producto) */
+        .hero-visual { position: relative; perspective: 1000px; animation: rise 1.1s .3s var(--ease) both; }
+
+        .scan-card {
+            position: relative; transform-style: preserve-3d;
+            border-radius: var(--r-lg);
+            background: linear-gradient(160deg, rgba(255,255,255,.14), rgba(255,255,255,.04));
+            border: 1px solid rgba(255,255,255,.18);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 1.1rem;
+            box-shadow: 0 40px 80px -30px rgba(0,0,0,.6);
+            transition: transform .25s ease-out;
+        }
+
+        .scan-stage {
+            position: relative; aspect-ratio: 1 / 1; border-radius: var(--r-md);
+            background:
+                radial-gradient(circle at 50% 40%, rgba(180,236,81,.22), transparent 60%),
+                linear-gradient(180deg, #123a24, #0a1d12);
+            overflow: hidden; display: grid; place-items: center;
+        }
+        .scan-stage .item { font-size: 7.5rem; color: rgba(255,255,255,.92); animation: floaty 5s ease-in-out infinite; filter: drop-shadow(0 20px 20px rgba(0,0,0,.4)); }
+        @keyframes floaty { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-12px) rotate(3deg); } }
+
+        .scan-line {
+            position: absolute; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--lime), transparent);
+            box-shadow: 0 0 24px 6px rgba(180,236,81,.55);
+            animation: scan 3.2s ease-in-out infinite;
+        }
+        @keyframes scan { 0% { top: 8%; } 50% { top: 92%; } 100% { top: 8%; } }
+
+        .corner { position: absolute; width: 34px; height: 34px; border: 3px solid var(--lime); }
+        .corner.tl { top: 14px; left: 14px; border-right: 0; border-bottom: 0; border-top-left-radius: 12px; }
+        .corner.tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; border-top-right-radius: 12px; }
+        .corner.bl { bottom: 14px; left: 14px; border-right: 0; border-top: 0; border-bottom-left-radius: 12px; }
+        .corner.br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; border-bottom-right-radius: 12px; }
+
+        .scan-result { padding: 1.1rem .5rem .4rem; }
+        .scan-result .row { display: flex; align-items: center; justify-content: space-between; margin-bottom: .7rem; }
+        .scan-result .tag {
+            display: inline-flex; align-items: center; gap: .5rem;
+            font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
+        }
+        .scan-result .tag i { width: 12px; height: 12px; border-radius: 4px; background: #FFD700; box-shadow: 0 0 14px #FFD700; }
+        .scan-result .pct { color: var(--lime); font-weight: 700; }
+        .meter { height: 8px; border-radius: 99px; background: rgba(255,255,255,.12); overflow: hidden; }
+        .meter > span { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--moss), var(--lime)); transition: width 1.4s var(--ease); }
+        .scan-result small { display: block; margin-top: .7rem; color: rgba(255,255,255,.6); font-size: .85rem; }
+        .demo-note { position: absolute; bottom: -1.7rem; left: 0; right: 0; text-align: center; font-size: .75rem; color: rgba(255,255,255,.45); }
+
+        .float-chip {
+            position: absolute; display: flex; align-items: center; gap: .6rem;
+            padding: .6rem .95rem; border-radius: 16px;
+            background: var(--paper); color: var(--ink);
+            font-weight: 600; font-size: .85rem;
+            box-shadow: 0 20px 40px -14px rgba(0,0,0,.5);
+            animation: floaty2 6s ease-in-out infinite;
+        }
+        .float-chip .sw { width: 14px; height: 14px; border-radius: 5px; }
+        .float-chip.c1 { top: 8%; left: -9%; }
+        .float-chip.c1 .sw { background: #8B4513; }
+        .float-chip.c2 { bottom: 24%; right: -8%; animation-delay: -2.5s; }
+        .float-chip.c2 .sw { background: #1E90FF; }
+        @keyframes floaty2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+        .scroll-hint {
+            position: absolute; bottom: 1.6rem; left: 50%; transform: translateX(-50%); z-index: 3;
+            width: 26px; height: 42px; border: 2px solid rgba(255,255,255,.35); border-radius: 99px;
+        }
+        .scroll-hint::after {
+            content: ''; position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px;
+            border-radius: 4px; background: var(--lime); animation: wheel 1.8s ease-in-out infinite;
+        }
+        @keyframes wheel { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(14px); } }
+
+        /* Cinta de contenedores */
+        .marquee {
+            background: var(--lime); color: var(--forest);
+            padding: 1rem 0; overflow: hidden; white-space: nowrap;
+            transform: rotate(-1.2deg); margin: -1.4rem -2%; position: relative; z-index: 5;
+            box-shadow: 0 10px 30px -10px rgba(12,36,23,.35);
+        }
+        .marquee-track { display: inline-flex; gap: 2.5rem; animation: marquee 32s linear infinite; padding-left: 2.5rem; }
+        .marquee:hover .marquee-track { animation-play-state: paused; }
+        .marquee-track span {
+            display: inline-flex; align-items: center; gap: 2.5rem;
+            font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
+        }
+        .marquee-track span::after { content: '✦'; font-size: .9rem; opacity: .6; }
+        @keyframes marquee { to { transform: translateX(-50%); } }
+
+        /* =============================================
+           ENCABEZADOS DE SECCIÓN
+           ============================================= */
+        .section-head { text-align: center; max-width: 760px; margin: 0 auto 4rem; }
+        .section-head .eyebrow { background: var(--light-color); color: var(--moss); padding: .4rem 1rem; margin-bottom: 1.2rem; }
+        .section-title { font-size: clamp(2rem, 4.2vw, 3.2rem); font-weight: 800; color: var(--forest); }
+        .section-title em { font-style: normal; color: var(--moss); background: linear-gradient(transparent 62%, rgba(180,236,81,.55) 62%); padding: 0 .1em; }
+        .section-lead { margin-top: 1.1rem; color: var(--muted); font-size: 1.1rem; }
+
+        /* Tarjetas con foco de luz que sigue al cursor */
+        .spot { position: relative; isolation: isolate; }
+        .spot::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+            background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(180,236,81,.30), transparent 45%);
+            opacity: 0; transition: opacity .4s;
+        }
+        .spot:hover::before { opacity: 1; }
+
+        /* =============================================
+           MISIÓN
+           ============================================= */
+        #mision { background: var(--cream); }
+
+        .mission-stats { display: grid; grid-template-columns: 1.05fr .95fr; gap: 4rem; align-items: start; }
+
+        .mission-text { position: sticky; top: 7rem; }
+        .mission-text h3 {
+            font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800; color: var(--forest); margin-bottom: 1.6rem;
+        }
+        .mission-text p { margin-bottom: 1.1rem; font-size: 1.06rem; color: #34453a; }
+        .mission-text p strong { color: var(--moss); background: linear-gradient(transparent 65%, rgba(180,236,81,.5) 65%); }
+        .mission-text .pull {
+            margin-top: 1.8rem; padding: 1.3rem 1.5rem; border-radius: var(--r-md);
+            background: var(--forest); color: var(--white); position: relative;
+            font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.35;
+        }
+        .mission-text .pull i { color: var(--lime); margin-right: .5rem; }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+
+        .stat-card {
+            background: var(--paper); padding: 1.8rem 1.6rem; border-radius: var(--r-md);
+            border: 1px solid var(--line); box-shadow: var(--shadow-light);
+            transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+        }
+        .stat-card:nth-child(even) { transform: translateY(2rem); }
+        .stat-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
+        .stat-card:nth-child(even):hover { transform: translateY(calc(2rem - 6px)); }
+
+        .stat-card .ico {
+            width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center;
+            background: var(--light-color); color: var(--moss); margin-bottom: 1.3rem; font-size: 1.05rem;
+        }
+        .stat-card .number {
+            font-family: var(--font-display); font-size: clamp(2.4rem, 4vw, 3.3rem); font-weight: 800;
+            color: var(--forest); line-height: 1; margin-bottom: .7rem; letter-spacing: -.04em;
+        }
+        .stat-card .label { font-size: .93rem; color: var(--muted); line-height: 1.45; }
+        .stat-card.hi { background: var(--forest); border-color: transparent; }
+        .stat-card.hi .number { color: var(--lime); }
+        .stat-card.hi .label { color: rgba(255,255,255,.7); }
+        .stat-card.hi .ico { background: rgba(180,236,81,.15); color: var(--lime); }
+
+        /* =============================================
+           CÓMO FUNCIONA
+           ============================================= */
+        #funcionamiento { background: var(--paper); border-block: 1px solid var(--line); }
+
+        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; position: relative; counter-reset: step; }
+        .features::before { /* línea que conecta los pasos */
+            content: ''; position: absolute; top: 3.2rem; left: 16%; right: 16%; height: 2px; z-index: 0;
+            background: repeating-linear-gradient(90deg, var(--moss) 0 8px, transparent 8px 18px); opacity: .35;
+        }
+
+        .feature-card {
+            position: relative; z-index: 1; counter-increment: step;
+            background: var(--cream); border-radius: var(--r-lg); padding: 2.4rem 2rem 2.2rem;
+            border: 1px solid var(--line);
+            transition: transform .5s var(--ease), box-shadow .5s var(--ease), background .4s;
+            overflow: hidden;
+        }
+        .feature-card::after {
+            content: '0' counter(step);
+            position: absolute; right: 1.3rem; top: .6rem;
+            font-family: var(--font-display); font-weight: 800; font-size: 5rem; line-height: 1;
+            color: var(--forest); opacity: .05; transition: opacity .4s, transform .5s var(--ease);
+        }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); background: var(--white); }
+        .feature-card:hover::after { opacity: .12; transform: scale(1.1) rotate(-4deg); }
+
+        .feature-card i {
+            width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center;
+            background: var(--forest); color: var(--lime); font-size: 1.5rem; margin-bottom: 1.8rem;
+            transition: transform .5s var(--ease), background .4s, color .4s;
+        }
+        .feature-card:hover i { transform: rotate(-8deg) scale(1.08); background: var(--lime); color: var(--forest); }
+
+        .feature-card h3 { font-size: 1.4rem; margin-bottom: .8rem; color: var(--forest); font-weight: 700; }
+        .feature-card p { color: var(--muted); font-size: 1rem; }
+
+        /* =============================================
+           CLASIFICADOR IA
+           ============================================= */
+        .classifier {
+            background: var(--forest); color: var(--white); overflow: hidden;
+        }
+        .classifier::before {
+            content: ''; position: absolute; width: 700px; height: 700px; border-radius: 50%;
+            top: -260px; left: 50%; transform: translateX(-50%);
+            background: radial-gradient(circle, rgba(31,122,58,.7), transparent 65%); pointer-events: none;
+        }
+        .classifier .container { position: relative; z-index: 1; max-width: 880px; }
+        .classifier .section-head .eyebrow { background: rgba(255,255,255,.08); color: var(--lime); }
+        .classifier .section-title { color: var(--white); }
+        .classifier .section-title em { color: var(--lime); background: none; }
+        .classifier .section-lead { color: rgba(255,255,255,.7); }
+
+        .upload-area {
+            position: relative; border-radius: var(--r-lg); padding: 4.2rem 2rem;
+            background: rgba(255,255,255,.04);
+            cursor: pointer; text-align: center;
+            transition: transform .4s var(--ease), background .4s;
+            /* borde punteado animado */
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Crect width='100%25' height='100%25' fill='none' rx='32' ry='32' stroke='%23b4ec51' stroke-width='2.5' stroke-dasharray='10%2C12' stroke-linecap='round'/%3E%3C/svg%3E");
+        }
+        .upload-area:hover { background-color: rgba(180,236,81,.08); transform: translateY(-4px); }
+        .upload-area.dragover { background-color: rgba(180,236,81,.16); transform: scale(1.02); }
+
+        .upload-area .up-icon {
+            width: 96px; height: 96px; margin: 0 auto 1.6rem; border-radius: 50%;
+            display: grid; place-items: center; font-size: 2.2rem;
+            background: var(--lime); color: var(--forest); position: relative;
+            transition: transform .5s var(--ease);
+        }
+        .upload-area .up-icon::before, .upload-area .up-icon::after {
+            content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--lime);
+            animation: ripple 2.6s ease-out infinite;
+        }
+        .upload-area .up-icon::after { animation-delay: 1.3s; }
+        @keyframes ripple { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(1.9); opacity: 0; } }
+        .upload-area:hover .up-icon { transform: scale(1.08) rotate(-6deg); }
+
+        .upload-area .up-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; margin-bottom: .6rem; }
+        .upload-area .up-sub { color: rgba(255,255,255,.65); font-size: .98rem; }
+        .upload-area .up-keys { margin-top: 1.4rem; display: inline-flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
+        .upload-area .up-keys span {
+            padding: .3rem .8rem; border-radius: 99px; background: rgba(255,255,255,.08);
+            font-size: .8rem; color: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.1);
+        }
+        #file-input { display: none; }
+
+        .preview-container {
+            display: none; margin: 0 auto; max-width: 560px; padding: 1.2rem 1.2rem 1.6rem;
+            background: var(--paper); color: var(--ink);
+            border-radius: var(--r-lg); box-shadow: 0 40px 80px -30px rgba(0,0,0,.6);
+            text-align: center; transition: opacity .5s ease, transform .6s var(--ease);
+            opacity: 0;
+        }
+        #image-preview {
+            display: block; width: 100%; max-height: 380px; object-fit: contain;
+            border-radius: var(--r-md); background: var(--cream);
+        }
+        .preview-actions { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; margin-top: 1.4rem; }
+
+        #analyze-btn { background: var(--forest); color: var(--white); box-shadow: 0 12px 28px -10px rgba(12,36,23,.6); }
+        #analyze-btn:hover:not(:disabled) { background: var(--moss); }
+        #analyze-btn:disabled { background: #cfd6cf; color: #7a857c; }
+
+        /* Resultados */
+        .result-container {
+            display: none; margin-top: 2rem; padding: 2.4rem;
+            background: var(--paper); color: var(--ink); border-radius: var(--r-lg);
+            box-shadow: 0 40px 80px -30px rgba(0,0,0,.6);
+            text-align: left; position: relative; overflow: hidden;
+            opacity: 0; transition: opacity .5s ease, transform .6s var(--ease);
+        }
+        .result-container::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+            background: linear-gradient(180deg, var(--lime), var(--moss));
+        }
+        .result-header { margin-bottom: 1.2rem; padding-left: .6rem; }
+        .waste-type { font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; color: var(--forest); letter-spacing: -.02em; }
+        .waste-info { padding-left: .6rem; color: #34453a; }
+        .waste-info p { margin-bottom: .6rem; }
+        .conf-meter { height: 10px; border-radius: 99px; background: var(--light-color); overflow: hidden; margin: .4rem 0 1.1rem; }
+        .conf-meter span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--moss), var(--lime)); animation: grow 1.2s var(--ease) both; }
+        @keyframes grow { from { width: 0 !important; } }
+
+        .disposal-guide {
+            margin: 1.4rem 0 0 .6rem; padding: 1.4rem 1.5rem; border-radius: var(--r-md);
+            background: var(--forest); color: rgba(255,255,255,.88);
+        }
+        .disposal-guide h3 { color: var(--lime); margin-bottom: .9rem; font-size: 1.15rem; display: flex; align-items: center; gap: .5rem; }
+        .disposal-guide p { margin-bottom: .55rem; }
+        .disposal-guide strong { color: var(--white); }
+        .disposal-guide span[style] { color: var(--lime) !important; }
+
+        /* =============================================
+           GUÍA
+           ============================================= */
+        #guia { background: var(--cream); }
+
+        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4rem; }
+
+        .guide-item {
+            --c: #999;
+            position: relative; overflow: hidden;
+            background: var(--paper); padding: 1.8rem 1.6rem 1.6rem; border-radius: var(--r-md);
+            border: 1px solid var(--line); box-shadow: var(--shadow-light);
+            transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+        }
+        .guide-item::after { /* franja inferior del color del contenedor */
+            content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--c);
+            transform: scaleX(.25); transform-origin: left; transition: transform .5s var(--ease);
+        }
+        .guide-item:hover { transform: translateY(-8px) rotate(-.6deg); box-shadow: var(--shadow-hover); }
+        .guide-item:hover::after { transform: scaleX(1); }
+
+        .guide-item h3 { font-size: 1.3rem; margin-bottom: .7rem; display: flex; align-items: center; color: var(--forest); font-weight: 700; }
+        .guide-item p { font-size: .96rem; color: var(--muted); margin-bottom: .5rem; }
+        .guide-item p strong { color: var(--ink); }
+
+        .guide-color {
+            display: inline-block; width: 22px; height: 26px; margin-right: 12px; flex: none;
+            border-radius: 5px 5px 7px 7px; background: var(--c); position: relative;
+            box-shadow: 0 6px 14px -4px var(--c);
+            transition: transform .45s var(--ease);
+        }
+        .guide-color::before { /* tapa del contenedor */
+            content: ''; position: absolute; left: -2px; right: -2px; top: -4px; height: 5px; border-radius: 3px; background: var(--c); filter: brightness(.82);
+            transform-origin: left bottom; transition: transform .45s var(--ease);
+        }
+        .guide-item:hover .guide-color::before { transform: rotate(-26deg); }
+
+        .guide-item.organic { --c: #8B4513; }
+        .guide-item.plastic, .guide-item.metal { --c: #F5C400; }
+        .guide-item.paper { --c: #1E90FF; }
+        .guide-item.glass { --c: #1c9a3c; }
+        .guide-item.electronic { --c: #333; }
+        .guide-item.hazardous { --c: #FF4500; }
+
+        /* =============================================
+           CONSEJOS
+           ============================================= */
+        #consejos { background: var(--paper); border-block: 1px solid var(--line); }
+
+        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.6rem; }
+
+        .tip-card {
+            display: flex; flex-direction: column;
+            background: var(--cream); padding: 2rem; border-radius: var(--r-lg);
+            border: 1px solid var(--line);
+            transition: transform .45s var(--ease), box-shadow .45s var(--ease), background .4s;
+        }
+        .tip-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); background: var(--white); }
+
+        .tip-card h3 { color: var(--forest); margin-bottom: .9rem; font-size: 1.3rem; font-weight: 700; }
+        .tip-card h3 i {
+            display: grid; place-items: center; width: 50px; height: 50px; border-radius: 16px; margin-bottom: 1.2rem;
+            background: var(--lime); color: var(--forest); font-size: 1.2rem;
+            transition: transform .5s var(--ease);
+        }
+        .tip-card:hover h3 i { transform: rotate(-10deg) scale(1.1); }
+        .tip-card p { color: var(--muted); font-size: 1rem; flex: 1; }
+
+        .tip-card a {
+            color: var(--moss); text-decoration: none; font-weight: 700;
+            display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.4rem; font-size: .95rem;
+        }
+        .tip-card a i { transition: transform .35s var(--ease); }
+        .tip-card a:hover i { transform: translateX(6px); }
+
+        /* =============================================
+           FAQ
+           ============================================= */
+        #faq { background: var(--cream); }
+        .faq-container { max-width: 860px; margin: 0 auto; display: grid; gap: .9rem; }
+
+        .faq-item {
+            background: var(--paper); border-radius: var(--r-md);
+            border: 1px solid var(--line); overflow: hidden;
+            transition: box-shadow .4s var(--ease), border-color .3s;
+        }
+        .faq-item:hover { box-shadow: var(--shadow-light); }
+        .faq-item[open] { border-color: rgba(31,122,58,.4); box-shadow: var(--shadow-light); }
+
+        .faq-item summary {
+            list-style: none; display: block; position: relative;
+            padding: 1.3rem 4rem 1.3rem 1.6rem; font-family: var(--font-display);
+            font-weight: 700; font-size: 1.12rem; letter-spacing: -.01em;
+            cursor: pointer; color: var(--forest); transition: color .25s;
+        }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary:hover { color: var(--moss); }
+
+        .faq-item summary::after {
+            content: '+'; position: absolute; right: 1.2rem; top: 50%;
+            width: 36px; height: 36px; margin-top: -18px; border-radius: 50%;
+            display: grid; place-items: center; font-size: 1.4rem; line-height: 1; font-family: var(--font-body);
+            background: var(--light-color); color: var(--moss);
+            transition: transform .45s var(--ease), background .3s, color .3s;
+        }
+        .faq-item[open] summary::after { content: '+'; transform: rotate(135deg); background: var(--forest); color: var(--lime); }
+
+        .faq-content { padding: 0 1.6rem 1.5rem; color: var(--muted); animation: fadeDown .5s var(--ease); }
+        .faq-content p { font-size: 1rem; }
+        .faq-content strong { color: var(--ink); }
+        @keyframes fadeDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+        /* =============================================
+           CHATBOT
+           ============================================= */
+        .chatbot-container { position: fixed; bottom: 22px; right: 22px; z-index: 1000; }
+
+        .chatbot-button {
+            position: relative; width: 66px; height: 66px; border-radius: 50%;
+            background: var(--lime); color: var(--forest); font-size: 1.5rem;
+            display: grid; place-items: center; cursor: pointer;
+            box-shadow: 0 14px 30px -8px rgba(12,36,23,.55);
+            transition: transform .4s var(--ease), box-shadow .4s;
+        }
+        .chatbot-button::before {
+            content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--lime);
+            animation: ping 2.8s var(--ease) infinite; z-index: -1;
+        }
+        .chatbot-button:hover { transform: scale(1.1) rotate(-8deg); }
+
+        .chatbot-window {
+            position: absolute; bottom: 82px; right: 0; width: 360px; height: 500px;
+            background: var(--paper); border-radius: var(--r-md);
+            box-shadow: 0 30px 70px -20px rgba(12,36,23,.55); border: 1px solid var(--line);
+            display: none; flex-direction: column; overflow: hidden;
+            transform-origin: bottom right;
+            animation: popIn .45s var(--ease);
+        }
+        @keyframes popIn { from { opacity: 0; transform: translateY(20px) scale(.88); } to { opacity: 1; transform: none; } }
+
+        .chatbot-header {
+            background: var(--forest); color: var(--white); padding: 1rem 1.2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .chatbot-header h3 { font-size: 1.02rem; font-weight: 700; display: flex; align-items: center; gap: .6rem; }
+        .chatbot-header h3::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
+
+        .chatbot-header button {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: rgba(255,255,255,.1); border: none; color: var(--white);
+            font-size: 1rem; cursor: pointer; transition: background .25s, transform .3s var(--ease);
+        }
+        .chatbot-header button:hover { background: rgba(255,255,255,.22); transform: rotate(90deg); }
+
+        .chatbot-messages { flex: 1; padding: 1.1rem; overflow-y: auto; display: flex; flex-direction: column; gap: .7rem; background: var(--cream); scroll-behavior: smooth; }
+
+        .menu-options { display: flex; flex-direction: column; gap: .5rem; margin-top: .4rem; }
+
+        .menu-btn {
+            background: var(--paper); color: var(--forest);
+            border: 1.5px solid var(--line); border-radius: 14px; padding: .75rem 1rem;
+            text-align: left; cursor: pointer; width: 100%;
+            font-family: var(--font-body); font-size: .9rem; font-weight: 600; line-height: 1.3;
+            transition: transform .3s var(--ease), background .25s, border-color .25s, box-shadow .3s;
+        }
+        .menu-btn:hover:not(:disabled) { background: var(--lime); border-color: var(--lime); transform: translateX(5px); box-shadow: 0 8px 18px -8px rgba(143,209,41,.8); }
+        .menu-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+        .message { max-width: 88%; padding: .7rem 1rem; border-radius: 18px; line-height: 1.45; word-wrap: break-word; font-size: .93rem; animation: msgIn .4s var(--ease); }
+        @keyframes msgIn { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
+
+        .bot-message { background: var(--paper); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 5px; }
+        .user-message { background: var(--forest); color: var(--white); align-self: flex-end; border-bottom-right-radius: 5px; font-weight: 500; }
+
+        .chatbot-input { display: none !important; }
+
+        /* Spinner */
+        .loading {
+            display: inline-block; width: 18px; height: 18px; vertical-align: -3px;
+            border: 3px solid rgba(143,209,41,.3); border-top-color: var(--lime-deep);
+            border-radius: 50%; animation: spin .9s linear infinite; margin-left: 5px;
+        }
+        #analyze-btn .loading { border-color: rgba(255,255,255,.3); border-top-color: var(--lime); margin-left: 0; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* =============================================
+           FOOTER
+           ============================================= */
+        footer { background: var(--forest); color: rgba(255,255,255,.75); padding: 5rem 0 2rem; position: relative; overflow: hidden; }
+        footer .big-word {
+            position: absolute; left: 50%; bottom: -3.2rem; transform: translateX(-50%); white-space: nowrap;
+            font-family: var(--font-display); font-weight: 800; font-size: clamp(5rem, 17vw, 15rem); letter-spacing: -.05em;
+            color: rgba(255,255,255,.04); pointer-events: none; user-select: none;
+        }
+        footer .container { position: relative; z-index: 1; }
+
+        .footer-content {
+            display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 3rem;
+            padding-bottom: 3rem; margin-bottom: 1.6rem; border-bottom: 1px solid rgba(255,255,255,.1);
+        }
+        .footer-section h3 { color: var(--white); margin-bottom: 1.2rem; font-size: 1.2rem; font-weight: 700; }
+        .footer-section p { max-width: 340px; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: .7rem; }
+        .footer-section ul li a { color: rgba(255,255,255,.75); text-decoration: none; transition: color .25s, padding .3s var(--ease); display: inline-block; }
+        .footer-section ul li a:hover { color: var(--lime); padding-left: 6px; }
+        .footer-section i { margin-right: 10px; color: var(--lime); width: 16px; text-align: center; }
+        .copyright { text-align: center; font-size: .88rem; color: rgba(255,255,255,.45); }
+
+        /* =============================================
+           ANIMACIÓN DE ENTRADA POR SCROLL
+           ============================================= */
+        .js .reveal { opacity: 0; transform: translateY(36px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+        .js .reveal.in { opacity: 1; transform: none; }
+        /* No pisar el desfase de las tarjetas de estadísticas ni su hover */
+        .js .stat-card.reveal:nth-child(even):not(.in) { transform: translateY(3.5rem); }
+        .js .stat-card.reveal.in:nth-child(even) { transform: translateY(2rem); }
+        .js .stat-card.reveal.in:nth-child(even):hover { transform: translateY(calc(2rem - 6px)); }
+        .js .stat-card.reveal.in:hover:nth-child(odd) { transform: translateY(-6px); }
+        .js .feature-card.reveal.in:hover, .js .tip-card.reveal.in:hover { transform: translateY(-10px); }
+        .js .guide-item.reveal.in:hover { transform: translateY(-8px) rotate(-.6deg); }
+
+        /* =============================================
+           RESPONSIVE
+           ============================================= */
+        @media (max-width: 980px) {
+            .hero .container { grid-template-columns: 1fr; gap: 4rem; }
+            .hero-visual { max-width: 420px; margin: 0 auto; }
+            .float-chip.c1 { left: -2%; }
+            .float-chip.c2 { right: -2%; }
+            .mission-stats { grid-template-columns: 1fr; gap: 3rem; }
+            .mission-text { position: static; }
+            .features { grid-template-columns: 1fr; }
+            .features::before { display: none; }
+            .footer-content { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        @media (max-width: 860px) {
+            .menu-toggle { display: grid; place-items: center; }
+            .nav-cta { display: none; }
+            nav {
+                position: absolute; top: calc(100% + 10px); left: 0; right: 0;
+                background: rgba(12,36,23,.96); backdrop-filter: blur(16px);
+                border-radius: var(--r-md); padding: .8rem; border: 1px solid rgba(255,255,255,.12);
+                opacity: 0; visibility: hidden; transform: translateY(-10px);
+                transition: opacity .3s, transform .4s var(--ease), visibility .3s;
+            }
+            nav.open { opacity: 1; visibility: visible; transform: none; }
+            nav ul { flex-direction: column; }
+            nav ul li a { padding: .9rem 1rem; }
+            .header-content { position: relative; }
+            header .container { position: relative; }
+        }
+
+        @media (max-width: 600px) {
+            section { padding: 5rem 0; }
+            .hero { padding-top: calc(var(--header-h) + 3rem); }
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat-card:nth-child(even), .js .stat-card.reveal.in:nth-child(even), .js .stat-card.reveal:nth-child(even):not(.in) { transform: none; }
+            .stat-card:nth-child(even):hover { transform: translateY(-6px); }
+            .upload-area { padding: 3rem 1.2rem; }
+            .result-container { padding: 1.6rem 1.2rem; }
+            .chatbot-window { width: calc(100vw - 32px); right: -6px; height: 70vh; }
+            .chatbot-container { bottom: 16px; right: 16px; }
+            .scroll-hint { display: none; }
+            .float-chip { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+            html { scroll-behavior: auto; }
+            .js .reveal { opacity: 1; transform: none; }
+        }
+    </style>
+    <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <header id="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#inicio" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    <h1>Eco<span>Clasificador</span></h1>
+                </a>
+                <nav id="main-nav" aria-label="Navegación principal">
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#mision">Misión</a></li>
+                        <li><a href="#clasificador">Clasificador IA</a></li>
+                        <li><a href="#guia">Guía</a></li>
+                        <li><a href="#consejos">Consejos</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-actions">
+                    <a href="#clasificador" class="nav-cta"><i class="fas fa-camera"></i> Clasificar</a>
+                    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+
+        <div class="container">
+            <div class="hero-copy">
+                <div class="eyebrow hero-in"><span class="dot"></span> IA para el reciclaje en Quibdó, Chocó</div>
+                <h2 class="hero-in">Gestión inteligente de <span class="hl">residuos
+                    <svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 60 2, 140 2, 297 12"/></svg>
+                </span></h2>
+                <p class="lead hero-in">Identifica correctamente tus residuos usando <strong>Inteligencia Artificial</strong> y aprende a separarlos para contribuir a un planeta más limpio y sostenible.</p>
+                <div class="hero-actions hero-in">
+                    <a href="#clasificador" class="btn">Probar Clasificador IA Ahora <i class="fas fa-arrow-right"></i></a>
+                    <a href="#guia" class="btn btn-ghost">Ver guía de separación</a>
+                </div>
+                <div class="hero-trust hero-in">
+                    <span><i class="fas fa-bolt"></i> Resultado en segundos</span>
+                    <span><i class="fas fa-paste"></i> Sube, arrastra o pega</span>
+                    <span><i class="fas fa-user-shield"></i> Fotos anónimas</span>
+                </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+                <div class="float-chip c1"><span class="sw"></span> Orgánico → Marrón</div>
+                <div class="float-chip c2"><span class="sw"></span> Papel → Azul</div>
+                <div class="scan-card" id="scan-card">
+                    <div class="scan-stage">
+                        <i class="fas fa-wine-bottle item"></i>
+                        <div class="scan-line"></div>
+                        <span class="corner tl"></span><span class="corner tr"></span>
+                        <span class="corner bl"></span><span class="corner br"></span>
+                    </div>
+                    <div class="scan-result">
+                        <div class="row">
+                            <span class="tag"><i></i> Plástico</span>
+                            <span class="pct" id="demo-pct">0%</span>
+                        </div>
+                        <div class="meter"><span id="demo-meter"></span></div>
+                        <small>Contenedor amarillo · Ejemplo ilustrativo</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-hint" aria-hidden="true"></div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <span>Orgánicos</span><span>Plásticos</span><span>Papel y Cartón</span><span>Vidrio</span><span>Metales</span><span>Electrónicos</span><span>Peligrosos</span>
+            <span>Orgánicos</span><span>Plásticos</span><span>Papel y Cartón</span><span>Vidrio</span><span>Metales</span><span>Electrónicos</span><span>Peligrosos</span>
+        </div>
+    </div>
+
+    <section id="mision">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="eyebrow"><i class="fas fa-flag"></i> Nuestra misión 🇨🇴</div>
+                <h2 class="section-title">Nuestra misión en <em>Quibdó</em> y el impacto de los datos</h2>
+            </div>
+
+            <div class="mission-stats">
+                <div class="mission-text reveal">
+                    <h3>Transformando el Chocó con Tecnología</h3>
+                    <p>La ciudad de <strong>Quibdó</strong> enfrenta desafíos ambientales críticos, especialmente la inadecuada gestión de residuos sólidos que afecta la salud pública y la biodiversidad local. Este proyecto nace de la necesidad de ir más allá de las campañas tradicionales. Buscamos generar una <strong>cultura de responsabilidad ambiental</strong> usando la tecnología como puente.</p>
+                    <p>Al utilizar EcoClasificador, no solo reciclas mejor; generas datos valiosos que nos permiten entender los patrones de desecho en la comunidad. Esta información es la base para desarrollar un <strong>modelo de IA localmente relevante</strong> que mejorará la infraestructura de reciclaje y optimizará las políticas públicas en el futuro.</p>
+                    <p>Tu participación es la clave para convertir la problemática de los desechos en una <strong>oportunidad de desarrollo sostenible</strong> para nuestra región.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card hi spot reveal">
+                        <div class="ico"><i class="fas fa-seedling"></i></div>
+                        <div class="number" data-count="65" data-prefix="~" data-suffix="%">~65%</div>
+                        <div class="label">Residuos orgánicos generados (Potencial de Compostaje)</div>
+                    </div>
+                    <div class="stat-card spot reveal">
+                        <div class="ico"><i class="fas fa-recycle"></i></div>
+                        <div class="number" data-count="12" data-suffix="%">12%</div>
+                        <div class="label">Tasa de aprovechamiento actual en la región (A mejorar)</div>
+                    </div>
+                    <div class="stat-card spot reveal">
+                        <div class="ico"><i class="fas fa-image"></i></div>
+                        <div class="number" data-count="10" data-suffix="MB">10MB</div>
+                        <div class="label">Tamaño máximo de imagen aceptado por la IA</div>
+                    </div>
+                    <div class="stat-card hi spot reveal">
+                        <div class="ico"><i class="fas fa-layer-group"></i></div>
+                        <div class="number" data-count="5" data-suffix="+">5+</div>
+                        <div class="label">Tipos de residuos en la Guía de Separación</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="funcionamiento">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="eyebrow"><i class="fas fa-lightbulb"></i> Paso a paso</div>
+                <h2 class="section-title">¿Cómo funciona <em>EcoClasificador</em>?</h2>
+            </div>
+            <div class="features">
+                <div class="feature-card spot reveal">
+                    <i class="fas fa-camera"></i>
+                    <h3>1. Carga o Pega la Imagen</h3>
+                    <p>Utiliza la función de arrastrar, seleccionar archivo o, simplemente, pega (Ctrl+V) una imagen de tu residuo. Guardamos el dato para mejorar nuestro modelo.</p>
+                </div>
+                <div class="feature-card spot reveal">
+                    <i class="fas fa-microchip"></i>
+                    <h3>2. El Cerebro IA Clasifica</h3>
+                    <p>Nuestro modelo entrenado analiza la imagen en segundos para identificar la categoría de residuo (Plástico, Papel, Orgánico, etc.) con alta precisión.</p>
+                </div>
+                <div class="feature-card spot reveal">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>3. Recibe la Guía de Desecho</h3>
+                    <p>Te mostramos el contenedor correcto y las instrucciones específicas para ese tipo de residuo, alineado a la normativa y las necesidades de Quibdó.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="classifier" id="clasificador">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="eyebrow"><i class="fas fa-robot"></i> Inteligencia Artificial</div>
+                <h2 class="section-title">Clasificador <em>inteligente</em> de residuos</h2>
+                <p class="section-lead">Sube o pega una foto de tu residuo y nuestro sistema de IA te dirá de qué tipo es y cómo debes desecharlo correctamente.</p>
+            </div>
+
+            <div class="upload-area reveal" id="upload-area" tabindex="0" role="button" aria-label="Subir imagen del residuo">
+                <div class="up-icon"><i class="fas fa-camera"></i></div>
+                <div class="up-title">Haz clic, arrastra o PEGA una imagen aquí</div>
+                <p class="up-sub">Formatos aceptados: JPG, PNG, GIF (máx. 10MB)</p>
+                <div class="up-keys"><span><i class="fas fa-mouse-pointer"></i> Clic</span><span><i class="fas fa-hand-pointer"></i> Arrastrar</span><span>Ctrl + V</span></div>
+                <input type="file" id="file-input" accept="image/*">
+            </div>
+
+            <div class="preview-container" id="preview-container">
+                <img id="image-preview" src="" alt="Vista previa de la imagen">
+                <div class="preview-actions">
+                    <button class="btn" id="analyze-btn">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <span id="analyze-text">Analizar con IA</span>
+                        <div class="loading" id="analyze-loading" style="display: none;"></div>
+                    </button>
+                    <button class="btn btn-outline" id="reset-btn" type="button"><i class="fas fa-rotate-left"></i> Elegir otra</button>
+                </div>
+            </div>
+
+            <div class="result-container" id="result-container">
+                <div class="result-header">
+                    <div class="waste-type" id="waste-type">Esperando análisis...</div>
+                </div>
+                <div class="waste-info" id="waste-info">
+                    <p><i class="fas fa-hourglass-half"></i> El sistema de inteligencia artificial está procesando tu imagen...</p>
+                </div>
+                <div class="disposal-guide">
+                    <h3><i class="fas fa-map-marker-alt"></i> ¿Dónde va este residuo?</h3>
+                    <div id="disposal-info">La información de disposición aparecerá aquí después del análisis.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="guia">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="eyebrow"><i class="fas fa-recycle"></i> Aprende a separar</div>
+                <h2 class="section-title">Guía de <em>separación</em> de residuos</h2>
+            </div>
+            <div class="guide-grid">
+                <div class="guide-item organic spot reveal">
+                    <h3><span class="guide-color organic"></span> Orgánicos</h3>
+                    <p>Restos de comida, cáscaras de frutas y verduras, posos de café, hojas secas, etc.</p>
+                    <p><strong>Contenedor:</strong> Marrón</p>
+                </div>
+                <div class="guide-item plastic spot reveal">
+                    <h3><span class="guide-color plastic"></span> Plásticos</h3>
+                    <p>Botellas, envases, bolsas, envoltorios, tapas, etc.</p>
+                    <p><strong>Contenedor:</strong> Amarillo</p>
+                </div>
+                <div class="guide-item paper spot reveal">
+                    <h3><span class="guide-color paper"></span> Papel y Cartón</h3>
+                    <p>Periódicos, revistas, cajas, folletos, sobres, etc.</p>
+                    <p><strong>Contenedor:</strong> Azul</p>
+                </div>
+                <div class="guide-item glass spot reveal">
+                    <h3><span class="guide-color glass"></span> Vidrio</h3>
+                    <p>Botellas, frascos, tarros, etc. (sin tapas metálicas).</p>
+                    <p><strong>Contenedor:</strong> Verde</p>
+                </div>
+                <div class="guide-item metal spot reveal">
+                    <h3><span class="guide-color metal"></span> Metales</h3>
+                    <p>Latas, aerosoles, tapas, papel de aluminio, etc.</p>
+                    <p><strong>Contenedor:</strong> Amarillo</p>
+                </div>
+                <div class="guide-item electronic spot reveal">
+                    <h3><span class="guide-color electronic"></span> Electrónicos</h3>
+                    <p>Baterías, pilas, móviles, cables, electrodomésticos, etc.</p>
+                    <p><strong>Destino:</strong> Puntos limpios</p>
+                </div>
+                <div class="guide-item hazardous spot reveal">
+                    <h3><span class="guide-color hazardous"></span> Peligrosos</h3>
+                    <p>Medicamentos, productos químicos, pinturas, aceites, etc.</p>
+                    <p><strong>Destino:</strong> Puntos limpios o farmacias</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="consejos">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="eyebrow"><i class="fas fa-newspaper"></i> Actualidad</div>
+                <h2 class="section-title">Consejos y <em>noticias</em> ecológicas</h2>
+                <p class="section-lead">Mantente al día con las mejores prácticas y noticias ecológicas relevantes para la región del Chocó. (Contenido se cargará desde la API /consejos).</p>
+            </div>
+
+            <div class="tips-grid" id="tips-grid">
+                <div class="tip-card spot reveal">
+                    <h3><i class="fas fa-seedling"></i> Compostaje Casero en Clima Tropical</h3>
+                    <p>Aprende las claves para acelerar la descomposición de orgánicos en el clima húmedo de Quibdó y reducir tu basura.</p>
+                    <a href="#">Leer más sobre Compostaje <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="tip-card spot reveal">
+                    <h3><i class="fas fa-flask"></i> Evita el Microplástico en tus Desechos</h3>
+                    <p>Descubre cómo la inadecuada disposición de ciertos productos (como telas sintéticas) contribuye a la contaminación del río Atrato.</p>
+                    <a href="#">Ver Guía de Microplásticos <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="tip-card spot reveal">
+                    <h3><i class="fas fa-battery-three-quarters"></i> Reciclaje Seguro de Baterías y Pilas</h3>
+                    <p>Conoce los puntos de recolección especializados para residuos electrónicos peligrosos y cómo separarlos correctamente en casa.</p>
+                    <a href="#">Ubicar Puntos Limpios <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="eyebrow"><i class="fas fa-circle-question"></i> Resolvemos tus dudas</div>
+                <h2 class="section-title">Preguntas <em>frecuentes</em></h2>
+            </div>
+
+            <div class="faq-container">
+                <details class="faq-item reveal">
+                    <summary>¿Cómo sé si la IA clasificó mi residuo correctamente?</summary>
+                    <div class="faq-content">
+                        <p>Al clasificar una imagen, la IA te mostrará un índice de <strong>Confianza</strong>. Si el índice es alto (más del 90%), es muy probable que sea correcto. En el caso de que veas un error, puedes usar la opción de "Feedback" (disponible en la versión final) para corregir la categoría y ayudarnos a mejorar el modelo de IA.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item reveal">
+                    <summary>¿Qué hago con el icopor (poliestireno expandido)?</summary>
+                    <div class="faq-content">
+                        <p>El icopor es un material complejo. Actualmente, la recomendación en Quibdó es depositarlo en el contenedor <strong>Negro (No Aprovechable)</strong>, asegurándose de que esté limpio y seco. Consulta el EcoBot para ver si hay campañas de reciclaje especializadas cerca de ti.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item reveal">
+                    <summary>¿Qué significa el contenedor "Marrón" para los orgánicos?</summary>
+                    <div class="faq-content">
+                        <p>El contenedor marrón está destinado a la recolección de residuos orgánicos (restos de comida, cáscaras, etc.) con el objetivo de desviarlos del relleno sanitario y utilizarlos para <strong>compostaje</strong>. Esto es vital para reducir la cantidad de basura que termina contaminando.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item reveal">
+                    <summary>¿Es seguro subir una foto de mi basura?</summary>
+                    <div class="faq-content">
+                        <p>Sí, es totalmente seguro. Las fotos se utilizan de forma anónima para <strong>entrenar y mejorar la precisión del modelo de IA</strong> en el reconocimiento de residuos locales en el contexto de Quibdó. No almacenamos datos personales junto a las imágenes.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <div class="chatbot-container">
+        <div class="chatbot-button" id="chatbot-button" role="button" tabindex="0" aria-label="Abrir EcoBot">
+            <i class="fas fa-comments"></i>
+        </div>
+        <div class="chatbot-window" id="chatbot-window">
+            <div class="chatbot-header">
+                <h3>EcoBot - Tu Guía Ecológica</h3>
+                <button class="close-chatbot" id="close-chatbot" aria-label="Cerrar chat"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="message bot-message">¡Hola! Soy EcoBot. Pulsa un botón para recibir información detallada sobre la gestión de residuos.</div>
+                <div class="menu-options" id="initial-menu">
+                    <button class="menu-btn" data-endpoint="/guias/plastico" data-type="guia">1. ¿Qué va en el contenedor amarillo (Plástico/Metal)?</button>
+                    <button class="menu-btn" data-endpoint="/consejos/compostaje-quibdo" data-type="consejo">2. ¿Por qué es importante el compostaje para Quibdó?</button>
+                    <button class="menu-btn" data-endpoint="/centros-reciclaje/quibdo" data-type="centros">3. Puntos de Reciclaje cerca de mí.</button>
+                </div>
+            </div>
+            <div class="chatbot-input" id="chatbot-input"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="big-word" aria-hidden="true">EcoClasificador</div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>EcoClasificador</h3>
+                    <p>Tu aliado en la gestión inteligente de residuos para un futuro más sostenible.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
+                        <li><a href="#mision"><i class="fas fa-compass"></i> Misión</a></li>
+                        <li><a href="#clasificador"><i class="fas fa-robot"></i> Clasificador IA</a></li>
+                        <li><a href="#guia"><i class="fas fa-book"></i> Guía de Residuos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@ecoclasificador.com</li>
+                        <li><i class="fas fa-phone"></i> +57 3186910528</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Quibdó, Chocó</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 EcoClasificador. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // =============================================
+    // 1. CONFIGURACIÓN DE LA API Y CONSTANTES
+    // =============================================
+    const API_BASE_URL = 'http://127.0.0.1:5000'; // URL de tu API Flask
+    const MAX_FILE_SIZE_MB = 10;
+
+    // Elementos del Clasificador
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('file-input');
+    const previewContainer = document.getElementById('preview-container');
+    const imagePreview = document.getElementById('image-preview');
+    const analyzeBtn = document.getElementById('analyze-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const analyzeText = document.getElementById('analyze-text');
+    const analyzeLoading = document.getElementById('analyze-loading');
+    const resultContainer = document.getElementById('result-container');
+    const wasteType = document.getElementById('waste-type');
+    const wasteInfo = document.getElementById('waste-info');
+    const disposalInfo = document.getElementById('disposal-info');
+
+    let currentFile = null;
+
+    // Elementos del Chatbot
+    const chatbotButton = document.getElementById('chatbot-button');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const closeChatbot = document.getElementById('close-chatbot');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    const initialMenu = document.getElementById('initial-menu');
+
+    // Elementos del Menú de Navegación para scroll suave
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+
+    // =============================================
+    // 2. FUNCIONES DE UTILIDAD Y CORE
+    // =============================================
+
+    /**
+     * Muestra una notificación temporal
+     * @param {string} message - Mensaje a mostrar.
+     * @param {string} type - Tipo de mensaje ('success', 'error', 'info').
+     */
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+
+        notification.style.cssText = `
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            max-width: min(380px, calc(100vw - 40px));
+            padding: 14px 20px;
+            border-radius: 16px;
+            color: white;
+            font-family: 'DM Sans', 'Segoe UI', sans-serif;
+            font-weight: 600;
+            font-size: .93rem;
+            z-index: 10000;
+            box-shadow: 0 20px 40px -12px rgba(12,36,23,.45);
+            opacity: 0;
+            transition: opacity .5s, transform .6s cubic-bezier(.22,1,.36,1);
+            transform: translateX(40px);
+        `;
+
+        if (type === 'error') notification.style.backgroundColor = '#c62828';
+        if (type === 'success') notification.style.backgroundColor = '#1f7a3a';
+        if (type === 'info') notification.style.backgroundColor = '#0c2417';
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateX(0)';
+        }, 10);
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateX(40px)';
+            notification.addEventListener('transitionend', () => notification.remove());
+        }, 4000);
+    }
+
+    /**
+     * Muestra la vista previa de la imagen cargada y el botón de análisis.
+     * @param {File} file - El archivo de imagen a previsualizar.
+     */
+    function displayImagePreview(file) {
+        if (!file.type.startsWith('image/')) {
+            showNotification('El archivo seleccionado no es una imagen.', 'error');
+            return;
+        }
+
+        if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+            showNotification(`La imagen es demasiado grande. Máximo ${MAX_FILE_SIZE_MB}MB.`, 'error');
+            return;
+        }
+
+        currentFile = file;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            imagePreview.alt = file.name;
+
+            // Ocultar área de carga
+            uploadArea.style.display = 'none';
+
+            // Mostrar contenedor de vista previa con animación
+            previewContainer.style.display = 'block';
+            setTimeout(() => {
+                previewContainer.style.opacity = '1';
+                resultContainer.style.display = 'none'; // Ocultar resultados anteriores
+            }, 10);
+
+            // Activar botón de análisis
+            analyzeBtn.disabled = false;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    /**
+     * Restaura la interfaz a su estado inicial.
+     */
+    function resetClassifier() {
+        currentFile = null;
+        fileInput.value = '';
+
+        previewContainer.style.opacity = '0';
+        previewContainer.style.display = 'none';
+
+        resultContainer.style.opacity = '0';
+        resultContainer.style.display = 'none';
+
+        uploadArea.style.display = 'block';
+        analyzeBtn.disabled = true;
+    }
+
+    // =============================================
+    // 3. LÓGICA DE CLASIFICADOR (IA)
+    // =============================================
+
+    /**
+     * Maneja el envío de la imagen a la API para clasificación.
+     */
+    async function handleAnalyze() {
+        if (!currentFile) {
+            showNotification('Por favor, primero carga una imagen.', 'info');
+            return;
+        }
+
+        // 1. Mostrar estado de carga
+        analyzeText.textContent = 'Analizando...';
+        analyzeLoading.style.display = 'inline-block';
+        analyzeBtn.disabled = true;
+
+        // 2. Preparar FormData
+        const formData = new FormData();
+        // 🚨 FIX: Cambiado 'file' a 'imagen' para que coincida con app.py (request.files['imagen'])
+        formData.append('imagen', currentFile);
+
+        try {
+            // 3. Petición a la API
+            const response = await fetch(`${API_BASE_URL}/clasificar`, {
+                method: 'POST',
+                body: formData
+            });
+
+            // Manejo de errores HTTP
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.mensaje || `Error HTTP: ${response.status}`);
+            }
+
+            // 4. Procesar respuesta exitosa
+            const data = await response.json();
+
+            if (data.estado === 'error') {
+                 throw new Error(data.mensaje || 'Error desconocido al clasificar.');
+            }
+
+            // Obtener el tipo de residuo y la confianza
+            const categoria = data.categoria || 'Desconocida';
+            const confianza = (data.confianza * 100).toFixed(2);
+
+            // Usamos la información de guía_residuo que devuelve la API
+            const guia = data.guia_residuo || {};
+
+            // Formatear el resultado
+            const htmlInfo = `
+                <p><strong>Nivel de Confianza:</strong> <span style="color: ${confianza > 80 ? 'var(--primary-color)' : '#ff9800'}; font-weight: bold;">${confianza}%</span></p>
+                <div class="conf-meter"><span style="width: ${Math.min(confianza, 100)}%"></span></div>
+                <p>La IA ha determinado esta categoría. Puedes encontrar su destino más abajo.</p>
+            `;
+
+            const htmlDisposal = `
+                <p><strong>Contenedor Recomendado:</strong> <span style="font-weight: bold; color: var(--secondary-color);">${guia.contenedor_color || 'N/A'} (${guia.contenedor_nombre || 'Contenedor Especial'})</span></p>
+                <p><strong>Instrucciones:</strong> ${guia.instrucciones || 'Separar cuidadosamente y llevar al punto de recolección más cercano.'}</p>
+                <p><strong>Ejemplos:</strong> ${guia.ejemplos || 'No disponibles'}</p>
+            `;
+
+            // 5. Actualizar la interfaz de resultados
+            wasteType.textContent = `¡Clasificación Exitosa! (${categoria})`;
+            wasteInfo.innerHTML = htmlInfo;
+            disposalInfo.innerHTML = htmlDisposal;
+
+            // Mostrar el contenedor de resultados
+            resultContainer.style.display = 'block';
+            setTimeout(() => {
+                resultContainer.style.opacity = '1';
+                // Desplazar a resultados
+                resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 10);
+
+            showNotification(`Residuo clasificado como: ${categoria}`, 'success');
+
+        } catch (error) {
+            console.error('Error al analizar la imagen:', error);
+
+            wasteType.textContent = "Error en el análisis";
+            wasteInfo.innerHTML = `<p style="color: #c62828;"><i class="fas fa-exclamation-triangle"></i> ${error.message}</p>`;
+            disposalInfo.innerHTML = "Por favor, intenta con otra imagen o verifica que la API esté corriendo en la URL configurada.";
+
+            // Mostrar error en el contenedor de resultados
+            resultContainer.style.display = 'block';
+            setTimeout(() => resultContainer.style.opacity = '1', 10);
+
+            showNotification('Falló la clasificación. Revisa la consola para detalles.', 'error');
+
+        } finally {
+            // 6. Restaurar estado del botón
+            analyzeText.textContent = 'Analizar con IA';
+            analyzeLoading.style.display = 'none';
+            analyzeBtn.disabled = false;
+        }
+    }
+
+    // =============================================
+    // 4. LÓGICA DEL CHATBOT DE MENÚ
+    // =============================================
+
+    /**
+     * Crea un mensaje en el área de conversación del chatbot.
+     * @param {string} text - Contenido del mensaje.
+     * @param {string} sender - 'bot' o 'user'.
+     */
+    function createMessage(text, sender) {
+        const messageElement = document.createElement('div');
+        messageElement.className = `message ${sender}-message`;
+
+        // Manejar saltos de línea para un mejor formato
+        messageElement.innerHTML = text.replace(/\n/g, '<br>');
+
+        chatbotMessages.appendChild(messageElement);
+        // Scroll automático hacia el final
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+        return messageElement;
+    }
+
+    /**
+     * Muestra las opciones de menú en el chatbot y oculta el contenido anterior.
+     * @param {HTMLElement} menuContainer - El contenedor de las opciones (e.g., initialMenu).
+     */
+    function showMenuOptions(menuContainer) {
+        // Ocultar todas las opciones previas (si existen)
+        const existingMenus = chatbotMessages.querySelectorAll('.menu-options');
+        existingMenus.forEach(menu => menu.style.display = 'none');
+
+        // Mostrar el menú actual
+        menuContainer.style.display = 'flex';
+        chatbotMessages.appendChild(menuContainer);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+
+    /**
+     * Desactiva temporalmente los botones del menú.
+     */
+    function disableMenuButtons() {
+        const buttons = chatbotMessages.querySelectorAll('.menu-options .menu-btn');
+        buttons.forEach(btn => btn.disabled = true);
+    }
+
+    /**
+     * Activa los botones del menú.
+     */
+    function enableMenuButtons() {
+        const buttons = chatbotMessages.querySelectorAll('.menu-options .menu-btn');
+        buttons.forEach(btn => btn.disabled = false);
+    }
+
+    /**
+     * Maneja la selección de una opción de menú y llama a la API.
+     * @param {Event} event - Evento de click.
+     */
+    async function handleMenuClick(event) {
+        const btn = event.target.closest('.menu-btn');
+        if (!btn || btn.disabled) return;
+
+        const endpoint = btn.getAttribute('data-endpoint');
+        const text = btn.textContent;
+        const type = btn.getAttribute('data-type'); // 'guia', 'consejo', 'centros'
+
+        // 1. Mostrar mensaje del usuario y deshabilitar botones
+        createMessage(text, 'user');
+        disableMenuButtons();
+
+        // 2. Mostrar mensaje de carga del bot
+        const loadingMessage = createMessage('<div class="loading"></div> Buscando información...', 'bot');
+
+        try {
+            // 3. Petición a la API
+            const response = await fetch(`${API_BASE_URL}${endpoint}`);
+
+            // 4. Manejo de errores
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.mensaje || `Error en la API: ${response.status}`);
+            }
+
+            const data = await response.json();
+            let botResponseText = '';
+
+            // 5. Formatear la respuesta según el tipo de endpoint
+            if (type === 'guia') {
+                // Endpoint /guias/<nombre_residuo>
+                botResponseText = `♻️ Guía de ${data.residuo || 'Residuo'}:\n\nContenedor: ${data.contenedor_color || 'N/A'}\nInstrucciones: ${data.instrucciones || 'N/A'}\n\nResiduos Comunes: ${data.residuos_ejemplo.join(', ')}`;
+            } else if (type === 'consejo') {
+                // Endpoint /consejos/<slug_consejo>
+                botResponseText = `💡 ${data.titulo}\n\n${data.contenido}\n\nFecha: ${data.fecha}`;
+            } else if (type === 'centros') {
+                // Endpoint /centros-reciclaje
+                const centros = data.centros || [];
+                if (centros.length > 0) {
+                    botResponseText = '📍 Puntos de Reciclaje en Quibdó:\n';
+                    centros.slice(0, 3).forEach(c => { // Mostrar solo 3 para no saturar
+                        botResponseText += `\n- ${c.nombre} (${c.tipo})\n  Dir: ${c.direccion}\n  Contacto: ${c.telefono || 'N/A'}`;
+                    });
+                    if (centros.length > 3) {
+                         botResponseText += `\n\n...y ${centros.length - 3} más. Consulta la API para ver la lista completa.`;
+                    }
+                } else {
+                    botResponseText = 'No se encontraron centros de reciclaje activos en este momento.';
+                }
+            } else {
+                botResponseText = 'Respuesta de la API recibida. ¡Pero el formato es desconocido!';
+            }
+
+            // Eliminar mensaje de carga y mostrar respuesta final
+            loadingMessage.remove();
+            createMessage(botResponseText, 'bot');
+
+        } catch (error) {
+            console.error('Error del EcoBot al contactar la API:', error);
+            // Eliminar mensaje de carga y mostrar error
+            loadingMessage.remove();
+            createMessage(`❌ Error: No pude obtener la información. El servidor API podría estar apagado o el endpoint falló. Detalles: ${error.message}`, 'bot');
+        } finally {
+            // 6. Devolver al menú principal después de un breve retraso
+            setTimeout(() => {
+                createMessage('¿Necesitas algo más? Selecciona una opción del menú.', 'bot');
+                showMenuOptions(initialMenu);
+                enableMenuButtons();
+            }, 1000);
+        }
+    }
+
+    // =============================================
+    // 5. LISTENERS Y ENLACES
+    // =============================================
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // 5.1 Listeners del Clasificador
+
+        // Listener para Clic en el área de carga
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+        });
+
+        // Listener para la selección del archivo
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                displayImagePreview(e.target.files[0]);
+            }
+        });
+
+        // Listener para Drag and Drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false); // Prevenir acción por defecto del navegador
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // Resaltar área de carga al arrastrar sobre ella
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, () => uploadArea.classList.add('dragover'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, () => uploadArea.classList.remove('dragover'), false);
+        });
+
+        // Manejo de Soltar (Drop)
+        uploadArea.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length > 0) {
+                displayImagePreview(files[0]);
+            }
+        }, false);
+
+        // Listener para Pegar (Paste)
+        document.addEventListener('paste', (e) => {
+            const items = e.clipboardData.items;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    const file = items[i].getAsFile();
+                    if (file) {
+                        displayImagePreview(file);
+                        showNotification('Imagen pegada desde el portapapeles. ¡Lista para analizar!', 'info');
+                    }
+                    return; // Solo procesar la primera imagen
+                }
+            }
+        });
+
+        // Listener para el botón de analizar
+        analyzeBtn.addEventListener('click', handleAnalyze);
+        resetBtn.addEventListener('click', resetClassifier);
+
+        // 5.2 Listeners del Chatbot
+
+        // Abrir/Cerrar la ventana del chatbot
+        const toggleChat = () => {
+            chatbotWindow.style.display = (chatbotWindow.style.display === 'flex' ? 'none' : 'flex');
+        };
+        chatbotButton.addEventListener('click', toggleChat);
+        chatbotButton.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleChat(); }
+        });
+
+        closeChatbot.addEventListener('click', () => {
+            chatbotWindow.style.display = 'none';
+        });
+
+        // Listener para los botones del menú (Delegación)
+        initialMenu.addEventListener('click', handleMenuClick);
+
+        // 5.3 Listener para scroll suave en enlaces de navegación
+        const mainNav = document.getElementById('main-nav');
+        const menuToggle = document.getElementById('menu-toggle');
+
+        navLinks.forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start' // Asegura que la sección quede en la parte superior
+                    });
+                }
+                mainNav.classList.remove('open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // 5.4 Comprobación inicial de la API
+        checkAPIStatus();
+
+        // Comprobación periódica (cada 30 segundos)
+        setInterval(checkAPIStatus, 30000);
+
+        // 5.5 Efectos visuales de la página
+        initVisualEffects(mainNav, menuToggle);
+    });
+
+    /**
+     * Verifica si la API está en línea (Endpoint /)
+     */
+    async function checkAPIStatus() {
+        try {
+            const response = await fetch(API_BASE_URL);
+            if (response.ok) {
+                console.log('✅ API de EcoClasificador está activa.');
+            } else {
+                console.error('⚠️ API de EcoClasificador en línea pero respondió con error.');
+            }
+        } catch (error) {
+            console.error('❌ No se pudo conectar a la API. Asegúrate de que el servidor Flask esté corriendo.', error.message);
+        }
+    }
+
+    // =============================================
+    // 6. EFECTOS VISUALES (solo presentación)
+    // =============================================
+    function initVisualEffects(mainNav, menuToggle) {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Menú móvil
+        menuToggle.addEventListener('click', () => {
+            const open = mainNav.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', open);
+        });
+
+        // Header compacto + barra de progreso
+        const header = document.getElementById('site-header');
+        const progress = document.getElementById('scroll-progress');
+        const onScroll = () => {
+            const y = window.scrollY;
+            header.classList.toggle('scrolled', y > 40);
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            progress.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        // Aparición al hacer scroll (con escalonado entre hermanos)
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach(el => {
+            const idx = Array.prototype.indexOf.call(el.parentElement.children, el);
+            el.style.transitionDelay = `${Math.min(idx, 6) * 90}ms`;
+        });
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in');
+                    revealObs.unobserve(entry.target);
+                    // Quitar el retraso tras la entrada para que el hover sea instantáneo
+                    setTimeout(() => { entry.target.style.transitionDelay = ''; }, 1200);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+        reveals.forEach(el => revealObs.observe(el));
+
+        // Contadores animados
+        const animateCount = (el) => {
+            const target = parseFloat(el.dataset.count);
+            const prefix = el.dataset.prefix || '';
+            const suffix = el.dataset.suffix || '';
+            if (reduceMotion) { el.textContent = prefix + target + suffix; return; }
+            const duration = 1600;
+            const start = performance.now();
+            const tick = (now) => {
+                const t = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - t, 4);
+                el.textContent = prefix + Math.round(target * eased) + suffix;
+                if (t < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        };
+        const countObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { animateCount(entry.target); countObs.unobserve(entry.target); }
+            });
+        }, { threshold: 0.6 });
+        document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+        // Enlace activo según la sección visible
+        const sections = ['inicio', 'mision', 'clasificador', 'guia', 'consejos']
+            .map(id => document.getElementById(id)).filter(Boolean);
+        const navAnchors = mainNav.querySelectorAll('a');
+        const spy = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+                }
+            });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        sections.forEach(s => spy.observe(s));
+
+        // Foco de luz que sigue al cursor en las tarjetas
+        document.querySelectorAll('.spot').forEach(card => {
+            card.addEventListener('pointermove', (e) => {
+                const r = card.getBoundingClientRect();
+                card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+                card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+            });
+        });
+
+        // Demo del hero: barra de confianza ilustrativa
+        const demoMeter = document.getElementById('demo-meter');
+        const demoPct = document.getElementById('demo-pct');
+        const runDemo = () => {
+            demoMeter.style.width = '96%';
+            let n = 0;
+            const id = setInterval(() => {
+                n += 3;
+                if (n >= 96) { n = 96; clearInterval(id); }
+                demoPct.textContent = n + '%';
+            }, 28);
+        };
+        setTimeout(runDemo, 900);
+
+        // Inclinación 3D suave de la tarjeta del hero
+        const scanCard = document.getElementById('scan-card');
+        if (scanCard && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
+            const hero = document.getElementById('inicio');
+            hero.addEventListener('pointermove', (e) => {
+                const r = hero.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width - 0.5;
+                const y = (e.clientY - r.top) / r.height - 0.5;
+                scanCard.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 8}deg)`;
+            });
+            hero.addEventListener('pointerleave', () => { scanCard.style.transform = ''; });
+        }
+    }
+</script>
+</body>
+</html>

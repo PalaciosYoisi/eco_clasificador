@@ -1,0 +1,462 @@
+2025-10-19 18:43:14,321 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.98.76:5000
+2025-10-19 18:43:14,322 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-10-19 18:43:14,330 - werkzeug - INFO -  * Restarting with stat
+2025-10-19 18:43:33,931 - werkzeug - WARNING -  * Debugger is active!
+2025-10-19 18:43:33,943 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-19 18:44:32,212 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 18:44:32] "GET / HTTP/1.1" 200 -
+2025-10-19 18:44:32,564 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 18:44:32] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-10-19 18:44:42,153 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 18:44:42] "GET /estadisticas HTTP/1.1" 200 -
+2025-10-19 18:44:57,497 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 18:44:57] "GET /modelo/info HTTP/1.1" 200 -
+2025-10-19 18:51:56,069 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 18:51:56] "GET / HTTP/1.1" 200 -
+2025-10-19 18:52:32,015 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 18:52:32] "[33mGET /modelo/clasificar HTTP/1.1[0m" 404 -
+2025-10-19 19:36:20,420 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:36:20] "GET / HTTP/1.1" 200 -
+2025-10-19 19:36:41,051 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:36:41] "GET / HTTP/1.1" 200 -
+2025-10-19 19:36:49,524 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:36:49] "POST /clasificar HTTP/1.1" 200 -
+2025-10-19 19:36:49,540 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:36:49] "GET / HTTP/1.1" 200 -
+2025-10-19 19:37:19,855 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:37:19] "GET / HTTP/1.1" 200 -
+2025-10-19 19:37:49,786 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:37:49] "GET / HTTP/1.1" 200 -
+2025-10-19 19:38:19,883 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:38:19] "GET / HTTP/1.1" 200 -
+2025-10-19 19:38:49,582 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:38:49] "GET / HTTP/1.1" 200 -
+2025-10-19 19:39:21,701 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:39:21] "GET / HTTP/1.1" 200 -
+2025-10-19 19:39:49,599 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:39:49] "GET / HTTP/1.1" 200 -
+2025-10-19 19:40:50,888 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:40:50] "GET / HTTP/1.1" 200 -
+2025-10-19 19:41:52,013 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:41:52] "GET / HTTP/1.1" 200 -
+2025-10-19 19:42:58,484 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:42:58] "GET / HTTP/1.1" 200 -
+2025-10-19 19:43:19,532 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:43:19] "GET / HTTP/1.1" 200 -
+2025-10-19 19:43:49,845 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:43:49] "GET / HTTP/1.1" 200 -
+2025-10-19 19:44:19,530 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:44:19] "GET / HTTP/1.1" 200 -
+2025-10-19 19:55:49,614 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:55:49] "GET / HTTP/1.1" 200 -
+2025-10-19 19:55:50,079 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:55:50] "GET / HTTP/1.1" 200 -
+2025-10-19 19:56:24,699 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:56:24] "GET / HTTP/1.1" 200 -
+2025-10-19 19:56:53,382 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:56:53] "GET / HTTP/1.1" 200 -
+2025-10-19 19:57:50,863 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:57:50] "GET / HTTP/1.1" 200 -
+2025-10-19 19:58:51,858 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:58:51] "GET / HTTP/1.1" 200 -
+2025-10-19 19:59:52,844 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 19:59:52] "GET / HTTP/1.1" 200 -
+2025-10-19 20:01:59,944 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:01:59] "GET / HTTP/1.1" 200 -
+2025-10-19 20:02:19,559 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:02:19] "GET / HTTP/1.1" 200 -
+2025-10-19 20:02:49,855 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:02:49] "GET / HTTP/1.1" 200 -
+2025-10-19 20:03:22,553 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:03:22] "GET / HTTP/1.1" 200 -
+2025-10-19 20:03:49,924 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:03:49] "GET / HTTP/1.1" 200 -
+2025-10-19 20:04:19,530 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:04:19] "GET / HTTP/1.1" 200 -
+2025-10-19 20:04:49,969 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:04:49] "GET / HTTP/1.1" 200 -
+2025-10-19 20:05:48,701 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:05:48] "GET / HTTP/1.1" 200 -
+2025-10-19 20:06:19,922 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:06:19] "GET / HTTP/1.1" 200 -
+2025-10-19 20:06:49,530 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:06:49] "GET / HTTP/1.1" 200 -
+2025-10-19 20:07:50,883 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:07:50] "GET / HTTP/1.1" 200 -
+2025-10-19 20:08:51,862 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:08:51] "GET / HTTP/1.1" 200 -
+2025-10-19 20:09:52,919 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:09:52] "GET / HTTP/1.1" 200 -
+2025-10-19 20:10:53,900 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:10:53] "GET / HTTP/1.1" 200 -
+2025-10-19 20:11:54,860 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:11:54] "GET / HTTP/1.1" 200 -
+2025-10-19 20:12:57,817 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:12:57] "GET / HTTP/1.1" 200 -
+2025-10-19 20:13:59,223 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:13:59] "GET / HTTP/1.1" 200 -
+2025-10-19 20:14:59,844 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:14:59] "GET / HTTP/1.1" 200 -
+2025-10-19 20:16:00,930 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:16:00] "GET / HTTP/1.1" 200 -
+2025-10-19 20:17:01,978 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:17:01] "GET / HTTP/1.1" 200 -
+2025-10-19 20:18:02,882 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:18:02] "GET / HTTP/1.1" 200 -
+2025-10-19 20:31:01,183 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:31:01] "GET / HTTP/1.1" 200 -
+2025-10-19 20:31:03,860 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:31:03] "GET / HTTP/1.1" 200 -
+2025-10-19 20:31:34,138 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:31:34] "GET / HTTP/1.1" 200 -
+2025-10-19 20:32:10,564 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:32:10] "GET / HTTP/1.1" 200 -
+2025-10-19 20:32:35,775 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:32:35] "GET / HTTP/1.1" 200 -
+2025-10-19 20:33:03,824 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:33:03] "GET / HTTP/1.1" 200 -
+2025-10-19 20:33:34,840 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:33:34] "GET / HTTP/1.1" 200 -
+2025-10-19 20:34:04,577 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:34:04] "GET / HTTP/1.1" 200 -
+2025-10-19 20:34:34,861 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:34:34] "GET / HTTP/1.1" 200 -
+2025-10-19 20:35:21,549 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:35:21] "GET / HTTP/1.1" 200 -
+2025-10-19 20:36:19,051 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:36:19] "GET / HTTP/1.1" 200 -
+2025-10-19 20:37:18,972 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:37:18] "GET / HTTP/1.1" 200 -
+2025-10-19 20:37:27,495 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:37:27] "GET / HTTP/1.1" 200 -
+2025-10-19 20:37:40,256 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:37:40] "GET / HTTP/1.1" 200 -
+2025-10-19 20:37:42,546 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:37:42] "POST /clasificar HTTP/1.1" 200 -
+2025-10-19 20:37:57,424 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:37:57] "GET / HTTP/1.1" 200 -
+2025-10-19 20:38:27,767 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 20:38:27] "GET / HTTP/1.1" 200 -
+2025-10-19 22:29:26,911 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:29:26] "GET / HTTP/1.1" 200 -
+2025-10-19 22:29:57,708 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:29:57] "GET / HTTP/1.1" 200 -
+2025-10-19 22:30:42,295 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:30:42] "GET / HTTP/1.1" 200 -
+2025-10-19 22:31:09,968 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:31:09] "GET / HTTP/1.1" 200 -
+2025-10-19 22:31:27,821 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:31:27] "GET / HTTP/1.1" 200 -
+2025-10-19 22:31:59,630 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:31:59] "GET / HTTP/1.1" 200 -
+2025-10-19 22:32:59,666 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:32:59] "GET / HTTP/1.1" 200 -
+2025-10-19 22:34:01,515 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:34:01] "GET / HTTP/1.1" 200 -
+2025-10-19 22:35:02,075 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:35:02] "GET / HTTP/1.1" 200 -
+2025-10-19 22:36:02,812 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:36:02] "GET / HTTP/1.1" 200 -
+2025-10-19 22:36:44,447 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:36:44] "GET / HTTP/1.1" 200 -
+2025-10-19 22:36:57,828 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:36:57] "GET / HTTP/1.1" 200 -
+2025-10-19 22:37:27,523 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:37:27] "GET / HTTP/1.1" 200 -
+2025-10-19 22:38:19,258 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 22:38:19] "GET / HTTP/1.1" 200 -
+2025-10-19 23:04:53,139 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:04:53] "GET / HTTP/1.1" 200 -
+2025-10-19 23:04:54,390 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:04:54] "GET / HTTP/1.1" 200 -
+2025-10-19 23:05:23,384 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:05:23] "GET / HTTP/1.1" 200 -
+2025-10-19 23:05:25,632 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:05:25] "GET / HTTP/1.1" 200 -
+2025-10-19 23:05:37,064 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:05:37] "GET / HTTP/1.1" 200 -
+2025-10-19 23:06:07,521 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:06:07] "GET / HTTP/1.1" 200 -
+2025-10-19 23:06:31,553 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:06:31] "GET / HTTP/1.1" 200 -
+2025-10-19 23:06:41,413 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:06:41] "[33mGET /chatbot?endpoint_url=/guias/plastico&pregunta=1.%20¿Qué%20va%20en%20el%20contenedor%20amarillo%20(Plástico/Metal)? HTTP/1.1[0m" 404 -
+2025-10-19 23:06:43,478 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:06:43] "[33mGET /chatbot?endpoint_url=/guias/plastico&pregunta=1.%20¿Qué%20va%20en%20el%20contenedor%20amarillo%20(Plástico/Metal)? HTTP/1.1[0m" 404 -
+2025-10-19 23:06:44,341 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:06:44] "[33mGET /chatbot?endpoint_url=/guias/plastico&pregunta=1.%20¿Qué%20va%20en%20el%20contenedor%20amarillo%20(Plástico/Metal)? HTTP/1.1[0m" 404 -
+2025-10-19 23:07:01,821 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:07:01] "GET / HTTP/1.1" 200 -
+2025-10-19 23:07:25,049 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:07:25] "GET / HTTP/1.1" 200 -
+2025-10-19 23:07:55,315 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:07:55] "GET / HTTP/1.1" 200 -
+2025-10-19 23:08:24,995 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:08:24] "GET / HTTP/1.1" 200 -
+2025-10-19 23:08:55,291 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:08:55] "GET / HTTP/1.1" 200 -
+2025-10-19 23:09:25,549 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:09:25] "GET / HTTP/1.1" 200 -
+2025-10-19 23:09:45,581 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:09:45] "GET / HTTP/1.1" 200 -
+2025-10-19 23:09:52,118 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:09:52] "POST /clasificar HTTP/1.1" 200 -
+2025-10-19 23:09:54,989 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:09:54] "GET / HTTP/1.1" 200 -
+2025-10-19 23:10:25,829 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:10:25] "GET / HTTP/1.1" 200 -
+2025-10-19 23:10:50,531 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:10:50] "GET / HTTP/1.1" 200 -
+2025-10-19 23:10:55,836 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:10:55] "GET / HTTP/1.1" 200 -
+2025-10-19 23:11:20,488 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:11:20] "GET / HTTP/1.1" 200 -
+2025-10-19 23:11:50,806 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:11:50] "GET / HTTP/1.1" 200 -
+2025-10-19 23:11:56,498 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:11:56] "GET / HTTP/1.1" 200 -
+2025-10-19 23:12:20,824 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:12:20] "GET / HTTP/1.1" 200 -
+2025-10-19 23:12:50,493 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:12:50] "GET / HTTP/1.1" 200 -
+2025-10-19 23:12:57,813 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:12:57] "GET / HTTP/1.1" 200 -
+2025-10-19 23:13:20,485 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:13:20] "GET / HTTP/1.1" 200 -
+2025-10-19 23:13:48,980 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:13:48] "GET / HTTP/1.1" 200 -
+2025-10-19 23:13:50,575 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:13:50] "GET / HTTP/1.1" 200 -
+2025-10-19 23:13:55,289 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:13:55] "GET / HTTP/1.1" 200 -
+2025-10-19 23:14:25,574 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:14:25] "GET / HTTP/1.1" 200 -
+2025-10-19 23:14:55,803 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:14:55] "GET / HTTP/1.1" 200 -
+2025-10-19 23:16:10,596 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:16:10] "GET / HTTP/1.1" 200 -
+2025-10-19 23:17:21,472 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:17:21] "GET / HTTP/1.1" 200 -
+2025-10-19 23:17:25,502 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:17:25] "GET / HTTP/1.1" 200 -
+2025-10-19 23:17:55,818 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:17:55] "GET / HTTP/1.1" 200 -
+2025-10-19 23:18:56,823 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:18:56] "GET / HTTP/1.1" 200 -
+2025-10-19 23:19:57,806 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:19:57] "GET / HTTP/1.1" 200 -
+2025-10-19 23:20:59,686 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:20:59] "GET / HTTP/1.1" 200 -
+2025-10-19 23:22:00,766 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:22:00] "GET / HTTP/1.1" 200 -
+2025-10-19 23:32:25,844 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:32:25] "GET / HTTP/1.1" 200 -
+2025-10-19 23:32:32,133 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:32:32] "[33mGET /guias/plastico HTTP/1.1[0m" 404 -
+2025-10-19 23:32:42,170 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:32:42] "[33mGET /consejos/compostaje-quibdo HTTP/1.1[0m" 404 -
+2025-10-19 23:32:55,805 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:32:55] "GET / HTTP/1.1" 200 -
+2025-10-19 23:33:10,513 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:33:10] "[31m[1mPOST /clasificar HTTP/1.1[0m" 400 -
+2025-10-19 23:33:25,751 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:33:25] "[31m[1mPOST /clasificar HTTP/1.1[0m" 400 -
+2025-10-19 23:33:25,803 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:33:25] "GET / HTTP/1.1" 200 -
+2025-10-19 23:33:29,415 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:33:29] "GET / HTTP/1.1" 200 -
+2025-10-19 23:33:52,941 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:33:52] "[31m[1mPOST /clasificar HTTP/1.1[0m" 400 -
+2025-10-19 23:33:59,270 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:33:59] "[31m[1mPOST /clasificar HTTP/1.1[0m" 400 -
+2025-10-19 23:33:59,501 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:33:59] "GET / HTTP/1.1" 200 -
+2025-10-19 23:34:29,509 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:34:29] "GET / HTTP/1.1" 200 -
+2025-10-19 23:34:45,219 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:34:45] "[31m[1mPOST /clasificar HTTP/1.1[0m" 400 -
+2025-10-19 23:35:00,436 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:35:00] "GET / HTTP/1.1" 200 -
+2025-10-19 23:35:29,493 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:35:29] "GET / HTTP/1.1" 200 -
+2025-10-19 23:35:59,508 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:35:59] "GET / HTTP/1.1" 200 -
+2025-10-19 23:36:29,503 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:36:29] "GET / HTTP/1.1" 200 -
+2025-10-19 23:36:59,555 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:36:59] "GET / HTTP/1.1" 200 -
+2025-10-19 23:37:40,977 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:37:40] "GET / HTTP/1.1" 200 -
+2025-10-19 23:37:42,563 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:37:42] "GET / HTTP/1.1" 200 -
+2025-10-19 23:37:54,597 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:37:54] "POST /clasificar HTTP/1.1" 200 -
+2025-10-19 23:38:12,539 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:38:12] "GET / HTTP/1.1" 200 -
+2025-10-19 23:38:43,523 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:38:43] "GET / HTTP/1.1" 200 -
+2025-10-19 23:39:02,583 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:39:02] "[33mGET /centros-reciclaje/quibdo HTTP/1.1[0m" 404 -
+2025-10-19 23:39:05,501 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:39:05] "[33mGET /consejos/compostaje-quibdo HTTP/1.1[0m" 404 -
+2025-10-19 23:39:12,562 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:39:12] "GET / HTTP/1.1" 200 -
+2025-10-19 23:39:43,500 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:39:43] "GET / HTTP/1.1" 200 -
+2025-10-19 23:40:13,513 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:40:13] "GET / HTTP/1.1" 200 -
+2025-10-19 23:40:43,515 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:40:43] "GET / HTTP/1.1" 200 -
+2025-10-19 23:41:12,530 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:41:12] "GET / HTTP/1.1" 200 -
+2025-10-19 23:41:43,645 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:41:43] "GET / HTTP/1.1" 200 -
+2025-10-19 23:42:17,168 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:42:17] "GET / HTTP/1.1" 200 -
+2025-10-19 23:43:17,626 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:43:17] "GET / HTTP/1.1" 200 -
+2025-10-19 23:44:03,071 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\talento_tech\\app.py', reloading
+2025-10-19 23:44:12,735 - werkzeug - INFO -  * Restarting with stat
+2025-10-19 23:44:34,582 - werkzeug - WARNING -  * Debugger is active!
+2025-10-19 23:44:34,589 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-19 23:44:34,757 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:44:34] "GET / HTTP/1.1" 200 -
+2025-10-19 23:44:42,529 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:44:42] "GET / HTTP/1.1" 200 -
+2025-10-19 23:44:43,995 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:44:43] "GET / HTTP/1.1" 200 -
+2025-10-19 23:44:47,807 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:44:47] "GET /centros-reciclaje/quibdo HTTP/1.1" 200 -
+2025-10-19 23:44:51,993 - __main__ - WARNING - Guía de residuo no encontrada para chatbot: plastico
+2025-10-19 23:44:51,995 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:44:51] "[33mGET /guias/plastico HTTP/1.1[0m" 404 -
+2025-10-19 23:45:13,915 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:45:13] "GET / HTTP/1.1" 200 -
+2025-10-19 23:45:44,134 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:45:44] "GET / HTTP/1.1" 200 -
+2025-10-19 23:45:54,233 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:45:54] "POST /clasificar HTTP/1.1" 200 -
+2025-10-19 23:46:13,939 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:46:13] "GET / HTTP/1.1" 200 -
+2025-10-19 23:46:44,508 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:46:44] "GET / HTTP/1.1" 200 -
+2025-10-19 23:47:13,922 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:47:13] "GET / HTTP/1.1" 200 -
+2025-10-19 23:47:43,940 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:47:43] "GET / HTTP/1.1" 200 -
+2025-10-19 23:48:13,943 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:48:13] "GET / HTTP/1.1" 200 -
+2025-10-19 23:48:43,922 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:48:43] "GET / HTTP/1.1" 200 -
+2025-10-19 23:49:13,924 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:49:13] "GET / HTTP/1.1" 200 -
+2025-10-19 23:49:44,953 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:49:44] "GET / HTTP/1.1" 200 -
+2025-10-19 23:50:18,570 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:50:18] "GET / HTTP/1.1" 200 -
+2025-10-19 23:50:57,769 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:50:57] "GET / HTTP/1.1" 200 -
+2025-10-19 23:51:14,495 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:51:14] "GET / HTTP/1.1" 200 -
+2025-10-19 23:51:44,500 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:51:44] "GET / HTTP/1.1" 200 -
+2025-10-19 23:52:27,067 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:52:27] "GET / HTTP/1.1" 200 -
+2025-10-19 23:53:02,069 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\talento_tech\\app.py', reloading
+2025-10-19 23:53:04,570 - werkzeug - INFO -  * Restarting with stat
+2025-10-19 23:53:25,222 - werkzeug - WARNING -  * Debugger is active!
+2025-10-19 23:53:25,227 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-19 23:53:25,377 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:53:25] "GET / HTTP/1.1" 200 -
+2025-10-19 23:54:17,776 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:54:17] "GET / HTTP/1.1" 200 -
+2025-10-19 23:54:44,497 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:54:44] "GET / HTTP/1.1" 200 -
+2025-10-19 23:55:06,107 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\talento_tech\\database.py', reloading
+2025-10-19 23:55:10,142 - werkzeug - INFO -  * Restarting with stat
+2025-10-19 23:57:23,755 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.98.76:5000
+2025-10-19 23:57:23,756 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-10-19 23:57:23,759 - werkzeug - INFO -  * Restarting with stat
+2025-10-19 23:57:40,853 - werkzeug - WARNING -  * Debugger is active!
+2025-10-19 23:57:40,859 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-19 23:57:41,024 - __main__ - ERROR - Error obteniendo consejo para chatbot: MySQL Connection not available.
+2025-10-19 23:57:41,025 - __main__ - ERROR - Error registrando visita: 2014 (HY000): Commands out of sync; you can't run this command now
+2025-10-19 23:57:41,035 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:57:41] "[35m[1mGET /consejos/compostaje-quibdo HTTP/1.1[0m" 500 -
+2025-10-19 23:57:41,038 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:57:41] "GET / HTTP/1.1" 200 -
+2025-10-19 23:57:46,177 - __main__ - WARNING - Guía de residuo no encontrada para chatbot: plastico
+2025-10-19 23:57:46,185 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:57:46] "[33mGET /guias/plastico HTTP/1.1[0m" 404 -
+2025-10-19 23:57:59,439 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:57:59] "GET / HTTP/1.1" 200 -
+2025-10-19 23:58:25,623 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:58:25] "POST /clasificar HTTP/1.1" 200 -
+2025-10-19 23:58:29,425 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:58:29] "GET / HTTP/1.1" 200 -
+2025-10-19 23:58:59,491 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:58:59] "GET / HTTP/1.1" 200 -
+2025-10-19 23:59:31,698 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:59:31] "GET / HTTP/1.1" 200 -
+2025-10-19 23:59:59,502 - werkzeug - INFO - 127.0.0.1 - - [19/Oct/2025 23:59:59] "GET / HTTP/1.1" 200 -
+2025-10-20 00:00:29,502 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:00:29] "GET / HTTP/1.1" 200 -
+2025-10-20 00:00:59,522 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:00:59] "GET / HTTP/1.1" 200 -
+2025-10-20 00:02:00,501 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:02:00] "GET / HTTP/1.1" 200 -
+2025-10-20 00:03:01,961 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:03:01] "GET / HTTP/1.1" 200 -
+2025-10-20 00:23:43,739 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:23:43] "GET / HTTP/1.1" 200 -
+2025-10-20 00:23:44,666 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:23:44] "GET / HTTP/1.1" 200 -
+2025-10-20 00:24:14,583 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:24:14] "GET / HTTP/1.1" 200 -
+2025-10-20 00:24:40,431 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:24:40] "POST /clasificar HTTP/1.1" 200 -
+2025-10-20 00:24:44,465 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:24:44] "GET / HTTP/1.1" 200 -
+2025-10-20 00:25:14,663 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:25:14] "GET / HTTP/1.1" 200 -
+2025-10-20 00:25:44,430 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:25:44] "GET / HTTP/1.1" 200 -
+2025-10-20 00:26:20,997 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:26:20] "GET / HTTP/1.1" 200 -
+2025-10-20 00:26:45,069 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:26:45] "GET / HTTP/1.1" 200 -
+2025-10-20 00:27:14,544 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:27:14] "GET / HTTP/1.1" 200 -
+2025-10-20 00:27:44,531 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:27:44] "GET / HTTP/1.1" 200 -
+2025-10-20 00:28:29,586 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:28:29] "GET / HTTP/1.1" 200 -
+2025-10-20 00:29:18,538 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:29:18] "GET / HTTP/1.1" 200 -
+2025-10-20 00:30:19,037 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:30:19] "GET / HTTP/1.1" 200 -
+2025-10-20 00:35:33,081 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:35:33] "GET / HTTP/1.1" 200 -
+2025-10-20 00:38:56,036 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:38:56] "GET / HTTP/1.1" 200 -
+2025-10-20 00:39:26,518 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:39:26] "GET / HTTP/1.1" 200 -
+2025-10-20 00:39:56,492 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:39:56] "GET / HTTP/1.1" 200 -
+2025-10-20 00:40:26,503 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:40:26] "GET / HTTP/1.1" 200 -
+2025-10-20 00:40:57,160 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:40:57] "GET / HTTP/1.1" 200 -
+2025-10-20 00:41:28,268 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:41:28] "GET / HTTP/1.1" 200 -
+2025-10-20 00:42:24,172 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:42:24] "GET / HTTP/1.1" 200 -
+2025-10-20 00:42:25,816 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:42:25] "GET / HTTP/1.1" 200 -
+2025-10-20 00:42:53,186 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:42:53] "POST /clasificar HTTP/1.1" 200 -
+2025-10-20 00:42:55,844 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:42:55] "GET / HTTP/1.1" 200 -
+2025-10-20 00:43:26,580 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:43:26] "GET / HTTP/1.1" 200 -
+2025-10-20 00:43:29,764 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:43:29] "GET / HTTP/1.1" 200 -
+2025-10-20 00:43:49,607 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:43:49] "[31m[1mPOST /clasificar HTTP/1.1[0m" 400 -
+2025-10-20 00:44:00,500 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:44:00] "GET / HTTP/1.1" 200 -
+2025-10-20 00:44:07,929 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:44:07] "GET / HTTP/1.1" 200 -
+2025-10-20 00:44:19,086 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:44:19] "POST /clasificar HTTP/1.1" 200 -
+2025-10-20 00:44:38,566 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:44:38] "GET / HTTP/1.1" 200 -
+2025-10-20 00:45:08,517 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:45:08] "GET / HTTP/1.1" 200 -
+2025-10-20 00:45:38,882 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:45:38] "GET / HTTP/1.1" 200 -
+2025-10-20 00:46:08,511 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 00:46:08] "GET / HTTP/1.1" 200 -
+2025-10-20 10:07:46,726 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.96:5000
+2025-10-20 10:07:46,743 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-10-20 10:07:46,751 - werkzeug - INFO -  * Restarting with stat
+2025-10-20 10:10:05,114 - werkzeug - WARNING -  * Debugger is active!
+2025-10-20 10:10:05,301 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-20 10:10:11,810 - __main__ - ERROR - Error registrando visita: 2013 (HY000): Lost connection to MySQL server during query
+2025-10-20 10:10:11,815 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:10:11] "GET / HTTP/1.1" 200 -
+2025-10-20 10:10:11,865 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:10:11] "GET / HTTP/1.1" 200 -
+2025-10-20 10:10:11,933 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:10:11] "GET / HTTP/1.1" 200 -
+2025-10-20 10:10:12,023 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:10:12] "GET / HTTP/1.1" 200 -
+2025-10-20 10:10:12,158 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:10:12] "GET / HTTP/1.1" 200 -
+2025-10-20 10:10:23,421 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:10:23] "GET / HTTP/1.1" 200 -
+2025-10-20 10:12:56,004 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:12:56] "GET / HTTP/1.1" 200 -
+2025-10-20 10:12:56,874 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:12:56] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-10-20 10:13:54,400 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:13:54] "GET / HTTP/1.1" 200 -
+2025-10-20 10:14:24,094 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:14:24] "GET / HTTP/1.1" 200 -
+2025-10-20 10:14:28,063 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:14:28] "POST /clasificar HTTP/1.1" 200 -
+2025-10-20 10:14:54,045 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:14:54] "GET / HTTP/1.1" 200 -
+2025-10-20 10:15:24,048 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:15:24] "GET / HTTP/1.1" 200 -
+2025-10-20 10:15:54,105 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:15:54] "GET / HTTP/1.1" 200 -
+2025-10-20 10:16:24,042 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:16:24] "GET / HTTP/1.1" 200 -
+2025-10-20 10:16:54,427 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:16:54] "GET / HTTP/1.1" 200 -
+2025-10-20 10:17:24,410 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:17:24] "GET / HTTP/1.1" 200 -
+2025-10-20 10:18:14,407 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:18:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:19:14,394 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:19:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:19:37,247 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:19:37] "GET / HTTP/1.1" 200 -
+2025-10-20 10:19:51,119 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:19:51] "GET / HTTP/1.1" 200 -
+2025-10-20 10:20:17,717 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:20:17] "POST /clasificar HTTP/1.1" 200 -
+2025-10-20 10:20:36,064 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:20:36] "GET / HTTP/1.1" 200 -
+2025-10-20 10:21:06,072 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:21:06] "GET / HTTP/1.1" 200 -
+2025-10-20 10:21:36,088 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:21:36] "GET / HTTP/1.1" 200 -
+2025-10-20 10:22:06,063 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:22:06] "GET / HTTP/1.1" 200 -
+2025-10-20 10:22:36,078 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:22:36] "GET / HTTP/1.1" 200 -
+2025-10-20 10:23:06,153 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:23:06] "GET / HTTP/1.1" 200 -
+2025-10-20 10:23:36,106 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:23:36] "GET / HTTP/1.1" 200 -
+2025-10-20 10:24:06,106 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:24:06] "GET / HTTP/1.1" 200 -
+2025-10-20 10:24:36,084 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:24:36] "GET / HTTP/1.1" 200 -
+2025-10-20 10:25:06,075 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:25:06] "GET / HTTP/1.1" 200 -
+2025-10-20 10:25:36,091 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:25:36] "GET / HTTP/1.1" 200 -
+2025-10-20 10:26:07,756 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:26:07] "GET / HTTP/1.1" 200 -
+2025-10-20 10:26:36,394 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:26:36] "GET / HTTP/1.1" 200 -
+2025-10-20 10:27:14,486 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:27:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:28:02,931 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:28:02] "GET / HTTP/1.1" 200 -
+2025-10-20 10:28:06,470 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:28:06] "GET / HTTP/1.1" 200 -
+2025-10-20 10:28:36,384 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:28:36] "GET / HTTP/1.1" 200 -
+2025-10-20 10:29:06,406 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:29:06] "GET / HTTP/1.1" 200 -
+2025-10-20 10:29:36,400 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:29:36] "GET / HTTP/1.1" 200 -
+2025-10-20 10:30:14,396 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:30:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:31:14,392 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:31:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:32:14,404 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:32:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:33:14,421 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:33:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:34:14,416 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:34:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:35:14,457 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:35:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:36:14,385 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:36:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:37:14,435 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:37:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:38:14,529 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:38:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:39:14,443 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:39:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:40:14,405 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:40:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:41:14,461 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:41:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:42:14,453 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:42:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:43:14,449 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:43:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:44:14,389 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:44:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:45:14,508 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:45:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:46:14,578 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:46:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:47:14,439 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:47:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:48:14,521 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:48:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:49:14,467 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:49:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:50:14,461 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:50:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:51:14,447 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:51:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:52:14,546 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:52:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:53:14,488 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:53:14] "GET / HTTP/1.1" 200 -
+2025-10-20 10:54:14,594 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 10:54:14] "GET / HTTP/1.1" 200 -
+2025-10-20 11:23:10,885 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:23:10] "GET / HTTP/1.1" 200 -
+2025-10-20 11:36:26,945 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:36:26] "GET / HTTP/1.1" 200 -
+2025-10-20 11:36:36,348 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:36:36] "GET / HTTP/1.1" 200 -
+2025-10-20 11:37:07,820 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:37:07] "GET / HTTP/1.1" 200 -
+2025-10-20 11:38:15,988 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:38:15] "GET / HTTP/1.1" 200 -
+2025-10-20 11:39:17,508 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:39:17] "GET / HTTP/1.1" 200 -
+2025-10-20 11:40:14,401 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:40:14] "GET / HTTP/1.1" 200 -
+2025-10-20 11:52:25,701 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:52:25] "GET / HTTP/1.1" 200 -
+2025-10-20 11:52:39,027 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:52:39] "GET / HTTP/1.1" 200 -
+2025-10-20 11:54:41,927 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:54:41] "GET / HTTP/1.1" 200 -
+2025-10-20 11:55:41,522 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:55:41] "GET / HTTP/1.1" 200 -
+2025-10-20 11:56:19,974 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:56:19] "GET / HTTP/1.1" 200 -
+2025-10-20 11:57:14,390 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:57:14] "GET / HTTP/1.1" 200 -
+2025-10-20 11:58:14,404 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:58:14] "GET / HTTP/1.1" 200 -
+2025-10-20 11:59:22,166 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 11:59:22] "GET / HTTP/1.1" 200 -
+2025-10-20 12:38:19,882 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 12:38:19] "GET / HTTP/1.1" 200 -
+2025-10-20 12:38:41,508 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 12:38:41] "GET / HTTP/1.1" 200 -
+2025-10-20 12:39:06,392 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 12:39:06] "GET / HTTP/1.1" 200 -
+2025-10-20 12:40:12,079 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 12:40:12] "GET / HTTP/1.1" 200 -
+2025-10-20 12:57:26,387 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\talento_tech\\chatbot.py', reloading
+2025-10-20 12:57:53,314 - werkzeug - INFO -  * Restarting with stat
+2025-10-20 12:59:46,082 - werkzeug - WARNING -  * Debugger is active!
+2025-10-20 12:59:46,169 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-20 13:07:51,721 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:07:51] "GET / HTTP/1.1" 200 -
+2025-10-20 13:08:06,373 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:08:06] "GET / HTTP/1.1" 200 -
+2025-10-20 13:08:36,354 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:08:36] "GET / HTTP/1.1" 200 -
+2025-10-20 13:09:14,350 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:09:14] "GET / HTTP/1.1" 200 -
+2025-10-20 13:10:23,193 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:10:23] "GET / HTTP/1.1" 200 -
+2025-10-20 13:10:36,620 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:10:36] "GET / HTTP/1.1" 200 -
+2025-10-20 13:10:48,420 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\talento_tech\\chatbot.py', reloading
+2025-10-20 13:10:53,232 - werkzeug - INFO -  * Restarting with stat
+2025-10-20 13:11:11,602 - werkzeug - WARNING -  * Debugger is active!
+2025-10-20 13:11:11,612 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-20 13:11:11,979 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:11:11] "GET / HTTP/1.1" 200 -
+2025-10-20 13:11:38,728 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:11:38] "GET / HTTP/1.1" 200 -
+2025-10-20 13:12:27,340 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:12:27] "GET / HTTP/1.1" 200 -
+2025-10-20 13:13:18,544 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:13:18] "GET / HTTP/1.1" 200 -
+2025-10-20 13:16:29,089 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\talento_tech\\chatbot.py', reloading
+2025-10-20 13:16:32,205 - werkzeug - INFO -  * Restarting with stat
+2025-10-20 13:16:59,663 - werkzeug - WARNING -  * Debugger is active!
+2025-10-20 13:16:59,766 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-20 13:21:09,528 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\talento_tech\\chatbot.py', reloading
+2025-10-20 13:21:12,996 - werkzeug - INFO -  * Restarting with stat
+2025-10-20 13:21:36,321 - werkzeug - WARNING -  * Debugger is active!
+2025-10-20 13:21:36,339 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-20 13:21:40,188 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\talento_tech\\chatbot.py', reloading
+2025-10-20 13:21:43,320 - werkzeug - INFO -  * Restarting with stat
+2025-10-20 13:22:12,381 - werkzeug - WARNING -  * Debugger is active!
+2025-10-20 13:22:12,417 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-20 13:26:00,317 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\talento_tech\\chatbot.py', reloading
+2025-10-20 13:26:03,739 - werkzeug - INFO -  * Restarting with stat
+2025-10-20 13:26:29,377 - werkzeug - WARNING -  * Debugger is active!
+2025-10-20 13:26:29,385 - werkzeug - INFO -  * Debugger PIN: 375-838-055
+2025-10-20 13:28:59,977 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:28:59] "GET / HTTP/1.1" 200 -
+2025-10-20 13:29:06,085 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:29:06] "GET / HTTP/1.1" 200 -
+2025-10-20 13:29:36,372 - werkzeug - INFO - 127.0.0.1 - - [20/Oct/2025 13:29:36] "GET / HTTP/1.1" 200 -
+2025-10-20 13:30:00,644 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\talento_tech\\chatbot.py', reloading
+2025-10-20 13:30:02,989 - werkzeug - INFO -  * Restarting with stat
+2026-10-05 23:14:30,574 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.156.200.93:5000
+2026-10-05 23:14:30,575 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-10-05 23:14:30,581 - werkzeug - INFO -  * Restarting with stat
+2026-10-05 23:14:46,120 - werkzeug - WARNING -  * Debugger is active!
+2026-10-05 23:14:46,131 - werkzeug - INFO -  * Debugger PIN: 216-012-579
+2026-10-05 23:32:59,798 - werkzeug - INFO - 127.0.0.1 - - [05/Oct/2026 23:32:59] "GET / HTTP/1.1" 200 -
+2026-10-05 23:33:00,135 - werkzeug - INFO - 127.0.0.1 - - [05/Oct/2026 23:33:00] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-10-05 23:33:44,728 - werkzeug - INFO -  * Detected change in 'C:\\xampp\\htdocs\\eco_clasificador-main\\database.py', reloading
+2026-10-05 23:33:46,048 - werkzeug - INFO -  * Restarting with stat
+2026-10-05 23:34:00,044 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-10-05 23:34:00,045 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-10-05 23:34:00,047 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-10-05 23:34:00,106 - werkzeug - WARNING -  * Debugger is active!
+2026-10-05 23:34:00,114 - werkzeug - INFO -  * Debugger PIN: 216-012-579
+2026-10-05 23:34:13,541 - werkzeug - INFO - 127.0.0.1 - - [05/Oct/2026 23:34:13] "GET / HTTP/1.1" 200 -
+2026-10-05 23:34:41,852 - werkzeug - INFO - 127.0.0.1 - - [05/Oct/2026 23:34:41] "[31m[1mGET /clasificar HTTP/1.1[0m" 405 -
+2026-10-05 23:35:15,255 - werkzeug - INFO - 127.0.0.1 - - [05/Oct/2026 23:35:15] "[31m[1mGET /clasificar HTTP/1.1[0m" 405 -
+2026-10-05 23:43:32,303 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-10-05 23:43:32,304 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-10-05 23:43:32,307 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-10-05 23:43:32,391 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.156.200.93:5000
+2026-10-05 23:43:32,391 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-10-05 23:43:32,395 - werkzeug - INFO -  * Restarting with stat
+2026-10-05 23:43:40,501 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-10-05 23:43:40,501 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-10-05 23:43:40,504 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-10-05 23:43:40,540 - werkzeug - WARNING -  * Debugger is active!
+2026-10-05 23:43:40,544 - werkzeug - INFO -  * Debugger PIN: 216-012-579
+2026-10-05 23:44:53,197 - werkzeug - INFO - 127.0.0.1 - - [05/Oct/2026 23:44:53] "GET / HTTP/1.1" 200 -
+2026-10-05 23:45:18,547 - werkzeug - INFO - 127.0.0.1 - - [05/Oct/2026 23:45:18] "GET /guias/plastico HTTP/1.1" 200 -
+2026-10-05 23:45:21,914 - werkzeug - INFO - 127.0.0.1 - - [05/Oct/2026 23:45:21] "GET /guias/plastico HTTP/1.1" 200 -
+2026-10-05 23:45:23,183 - werkzeug - INFO - 127.0.0.1 - - [05/Oct/2026 23:45:23] "GET / HTTP/1.1" 200 -
+2026-10-05 23:45:40,339 - werkzeug - INFO - 127.0.0.1 - - [05/Oct/2026 23:45:40] "POST /clasificar HTTP/1.1" 200 -
+2026-10-06 00:31:18,696 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-10-06 00:31:18,697 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-10-06 00:31:18,700 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-10-06 00:31:18,785 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.156.200.93:5000
+2026-10-06 00:31:18,785 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-10-06 00:31:18,789 - werkzeug - INFO -  * Restarting with stat
+2026-10-06 00:31:29,324 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-10-06 00:31:29,325 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-10-06 00:31:29,328 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-10-06 00:31:29,399 - werkzeug - WARNING -  * Debugger is active!
+2026-10-06 00:31:29,413 - werkzeug - INFO -  * Debugger PIN: 216-012-579
+2026-10-06 00:31:38,151 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:31:38] "POST /clasificar HTTP/1.1" 200 -
+2026-10-06 00:31:38,757 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:31:38] "GET / HTTP/1.1" 200 -
+2026-10-06 00:32:08,749 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:32:08] "GET / HTTP/1.1" 200 -
+2026-10-06 00:32:18,663 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:32:18] "GET /centros-reciclaje/quibdo HTTP/1.1" 200 -
+2026-10-06 00:32:27,641 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:32:27] "GET /consejos/compostaje-quibdo HTTP/1.1" 200 -
+2026-10-06 00:32:38,751 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:32:38] "GET / HTTP/1.1" 200 -
+2026-10-06 00:32:38,927 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:32:38] "GET /guias/plastico HTTP/1.1" 200 -
+2026-10-06 00:33:09,614 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:33:09] "GET / HTTP/1.1" 200 -
+2026-10-06 00:33:38,751 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:33:38] "GET / HTTP/1.1" 200 -
+2026-10-06 00:34:08,754 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:34:08] "GET / HTTP/1.1" 200 -
+2026-10-06 00:34:38,747 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:34:38] "GET / HTTP/1.1" 200 -
+2026-10-06 00:35:08,747 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:35:08] "GET / HTTP/1.1" 200 -
+2026-10-06 00:35:38,750 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:35:38] "GET / HTTP/1.1" 200 -
+2026-10-06 00:36:09,625 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:36:09] "GET / HTTP/1.1" 200 -
+2026-10-06 00:36:39,610 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:36:39] "GET / HTTP/1.1" 200 -
+2026-10-06 00:37:40,614 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:37:40] "GET / HTTP/1.1" 200 -
+2026-10-06 00:38:07,357 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:38:07] "GET / HTTP/1.1" 200 -
+2026-10-06 00:38:37,628 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:38:37] "GET / HTTP/1.1" 200 -
