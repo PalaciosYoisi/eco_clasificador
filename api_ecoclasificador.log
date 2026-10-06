@@ -466,3 +466,20 @@
 2026-10-06 00:40:37,620 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:40:37] "GET / HTTP/1.1" 200 -
 2026-10-06 00:41:07,618 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:41:07] "GET / HTTP/1.1" 200 -
 2026-10-06 00:41:37,617 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:41:37] "GET / HTTP/1.1" 200 -
+2026-10-06 00:42:37,404 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:42:37] "GET / HTTP/1.1" 200 -
+2026-10-06 00:43:07,606 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:43:07] "GET / HTTP/1.1" 200 -
+2026-10-06 00:43:37,620 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:43:37] "GET / HTTP/1.1" 200 -
+2026-10-06 00:44:49,118 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-10-06 00:44:49,118 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-10-06 00:44:49,120 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-10-06 00:44:49,162 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.156.200.93:5000
+2026-10-06 00:44:49,162 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-10-06 00:44:49,164 - werkzeug - INFO -  * Restarting with stat
+2026-10-06 00:44:57,099 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-10-06 00:44:57,100 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-10-06 00:44:57,101 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-10-06 00:44:57,146 - werkzeug - WARNING -  * Debugger is active!
+2026-10-06 00:44:57,150 - werkzeug - INFO -  * Debugger PIN: 216-012-579
