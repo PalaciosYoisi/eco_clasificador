@@ -483,3 +483,11 @@
 2026-10-06 00:44:57,101 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
 2026-10-06 00:44:57,146 - werkzeug - WARNING -  * Debugger is active!
 2026-10-06 00:44:57,150 - werkzeug - INFO -  * Debugger PIN: 216-012-579
+2026-10-06 00:45:39,614 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:45:39] "GET / HTTP/1.1" 200 -
+2026-10-06 00:46:40,616 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:46:40] "GET / HTTP/1.1" 200 -
+2026-10-06 00:47:41,604 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:47:41] "GET / HTTP/1.1" 200 -
+2026-10-06 00:48:42,605 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:48:42] "GET / HTTP/1.1" 200 -
+2026-10-06 00:49:43,624 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:49:43] "GET / HTTP/1.1" 200 -
+2026-10-06 00:50:44,605 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:50:44] "GET / HTTP/1.1" 200 -
+2026-10-06 00:51:45,612 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:51:45] "GET / HTTP/1.1" 200 -
+2026-10-06 00:52:46,606 - werkzeug - INFO - 127.0.0.1 - - [06/Oct/2026 00:52:46] "GET / HTTP/1.1" 200 -
