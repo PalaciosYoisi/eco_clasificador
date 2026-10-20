@@ -8,18 +8,24 @@ import logging
 from werkzeug.utils import secure_filename
 from typing import Dict, Any
 import uuid
+from pathlib import Path
 
 # Importar nuestros módulos
 # **Asegúrate de que tus módulos 'clasificador' y 'database' existen**
 from clasificador import ClasificadorResiduos
 from database import DatabaseManager
 
+# Rutas del proyecto (independientes del directorio desde donde se ejecuta)
+BASE_DIR = Path(__file__).resolve().parent.parent
+RUNTIME_DIR = BASE_DIR / 'runtime'
+os.makedirs(RUNTIME_DIR / 'logs', exist_ok=True)
+
 # Configuración de logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('api_ecoclasificador.log'),
+        logging.FileHandler(RUNTIME_DIR / 'logs' / 'api_ecoclasificador.log'),
         logging.StreamHandler()
     ]
 )
@@ -29,7 +35,7 @@ app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:5500", "*"])  # Permite todos los orígenes para desarrollo
 
 # Configuración
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = str(RUNTIME_DIR / 'uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
@@ -39,7 +45,7 @@ app.config['JSON_SORT_KEYS'] = False
 
 # Crear carpetas necesarias
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs('temp', exist_ok=True)
+os.makedirs(RUNTIME_DIR / 'temp', exist_ok=True)
 
 # Inicializar componentes
 try:

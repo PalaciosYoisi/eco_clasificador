@@ -5,9 +5,12 @@ from PIL import Image
 import json
 import os
 import time
+from pathlib import Path
+
+MODELS_DIR = Path(__file__).resolve().parent.parent / 'models'
 
 class ClasificadorResiduos:
-    def __init__(self, modelo_path='modelo_final_residuos.h5', config_path='configuracion_clases.json'):
+    def __init__(self, modelo_path=str(MODELS_DIR / 'modelo_final_residuos.h5'), config_path=str(MODELS_DIR / 'configuracion_clases.json')):
         """Cargar modelo entrenado - Versión compatible con TF 2.16+"""
         print("🚀 Inicializando Clasificador de Residuos...")
         start_time = time.time()
