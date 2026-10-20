@@ -8,8 +8,6 @@ Ejecutar:  pytest -v tests/test_02_validar_envio.py
 import io
 import os
 
-PNG_MINIMO = b"\x89PNG\r\n\x1a\n" + b"0" * 32
-
 
 def enviar(cliente, contenido, nombre):
     """Envia un archivo al campo 'imagen', como lo hace el formulario web."""

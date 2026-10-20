@@ -39,10 +39,8 @@ class ClasificadorFalso:
 
     def __init__(self):
         self.resultado = dict(RESULTADO_EXITO)
-        self.rutas_recibidas = []
 
     def clasificar_imagen(self, ruta):
-        self.rutas_recibidas.append(ruta)
         return self.resultado
 
 
@@ -94,7 +92,6 @@ def app_modulo(tmp_path_factory):
 def cliente(app_modulo):
     """Cliente HTTP de Flask; el clasificador vuelve a su respuesta de exito."""
     app_modulo.clasificador.resultado = dict(RESULTADO_EXITO)
-    app_modulo.clasificador.rutas_recibidas = []
     return app_modulo.app.test_client()
 
 
