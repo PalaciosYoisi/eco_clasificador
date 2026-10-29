@@ -20,15 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 RUNTIME_DIR = BASE_DIR / 'runtime'
 os.makedirs(RUNTIME_DIR / 'logs', exist_ok=True)
 
-# Configuración de logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(RUNTIME_DIR / 'logs' / 'api_ecoclasificador.log'),
-        logging.StreamHandler()
-    ]
-)
+# Registro: la terminal solo muestra avisos y errores; el detalle queda en runtime/logs
+archivo_log = logging.FileHandler(RUNTIME_DIR / 'logs' / 'api_ecoclasificador.log', encoding='utf-8')
+archivo_log.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+consola = logging.StreamHandler()
+consola.setLevel(logging.WARNING)
+consola.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+logging.basicConfig(level=logging.INFO, handlers=[archivo_log, consola])
+logging.getLogger('werkzeug').setLevel(logging.ERROR)   # sin una línea por cada petición
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
@@ -49,12 +48,12 @@ os.makedirs(RUNTIME_DIR / 'temp', exist_ok=True)
 
 # Inicializar componentes
 try:
-    logger.info("🚀 Inicializando sistema EcoClasificador...")
+    logger.info("Inicializando sistema EcoClasificador...")
     clasificador = ClasificadorResiduos()
     db = DatabaseManager()
-    logger.info("✅ Componentes inicializados correctamente")
+    logger.info("Componentes inicializados correctamente")
 except Exception as e:
-    logger.error(f"❌ Error inicializando componentes: {e}")
+    logger.error(f"Error inicializando componentes: {e}")
     # En un entorno de producción, es posible que quieras comentar el "raise"
     # para permitir que la API se levante sin base de datos o clasificador,
     # aunque con funcionalidad limitada.
@@ -127,7 +126,6 @@ def home():
         'timestamp': datetime.now().isoformat(),
         'endpoints': {
             '/clasificar': 'POST - Clasificar imagen de residuo',
-            '/clasificar/url': 'POST - Clasificar desde URL',
             '/clasificaciones': 'GET - Historial de clasificaciones',
             '/estadisticas': 'GET - Estadísticas del sistema',
             '/guia/<categoria>': 'GET - Guía de residuos por categoría',
@@ -178,7 +176,7 @@ def clasificar_imagen():
         
         # **GUARDAR ARCHIVO LOCALMENTE (MODIFICACIÓN PARA CONSERVAR IMAGEN)**
         archivo.save(filepath)
-        logger.info(f"📁 Archivo guardado permanentemente: {unique_filename}")
+        logger.info(f"Archivo guardado permanentemente: {unique_filename}")
         
         try:
             # Clasificar imagen
@@ -214,7 +212,7 @@ def clasificar_imagen():
                     }
                 }
                 
-                logger.info(f"✅ Clasificación exitosa: {resultado['categoria']} ({resultado['confianza']:.2%})")
+                logger.info(f"Clasificación exitosa: {resultado['categoria']} ({resultado['confianza']:.2%})")
                 
             else:
                 respuesta = {
@@ -222,7 +220,7 @@ def clasificar_imagen():
                     'mensaje': resultado['mensaje'],
                     'codigo': 'ERROR_CLASIFICACION'
                 }
-                logger.error(f"❌ Error en clasificación: {resultado['mensaje']}")
+                logger.error(f"Error en clasificación: {resultado['mensaje']}")
             
             # **NOTA:** La imagen NO se elimina (se guarda localmente como se solicitó)
             
@@ -231,7 +229,7 @@ def clasificar_imagen():
         except Exception as e:
             # En caso de error, el archivo queda guardado para auditoría.
             
-            logger.error(f"❌ Error procesando imagen: {str(e)}")
+            logger.error(f"Error procesando imagen: {str(e)}")
             return jsonify({
                 'estado': 'error',
                 'mensaje': f'Error procesando imagen: {str(e)}',
@@ -239,21 +237,12 @@ def clasificar_imagen():
             }), 500
         
     except Exception as e:
-        logger.error(f"❌ Error interno: {str(e)}")
+        logger.error(f"Error interno: {str(e)}")
         return jsonify({
             'estado': 'error',
             'mensaje': 'Error interno del servidor',
             'codigo': 'ERROR_INTERNO'
         }), 500
-
-@app.route('/clasificar/url', methods=['POST'])
-def clasificar_desde_url():
-    """Clasificar imagen desde URL (para implementación futura)"""
-    return jsonify({
-        'estado': 'desarrollo',
-        'mensaje': 'Endpoint en desarrollo. Próximamente podrás clasificar imágenes desde URLs.',
-        'codigo': 'EN_DESARROLLO'
-    }), 501
 
 @app.route('/clasificaciones', methods=['GET'])
 def obtener_clasificaciones():
@@ -575,7 +564,7 @@ def recibir_feedback():
         db.connection.commit()
         cursor.close()
         
-        logger.info(f"✅ Feedback recibido para clasificación {clasificacion_id}")
+        logger.info(f"Feedback recibido para clasificación {clasificacion_id}")
         
         return jsonify({
             'estado': 'éxito',
@@ -621,7 +610,7 @@ def log_chatbot_conversation():
             endpoint_hit
         )
         
-        logger.info(f"💬 Log de chatbot guardado. ID: {log_id}")
+        logger.info(f"Log de chatbot guardado. ID: {log_id}")
         
         return jsonify({
             'estado': 'éxito',
@@ -631,14 +620,14 @@ def log_chatbot_conversation():
         
     except AttributeError:
         # Esto ocurre si db.guardar_conversacion_chatbot() no existe
-        logger.error("❌ Error: Función 'guardar_conversacion_chatbot' no definida en database.py. Asumiendo retorno 0.")
+        logger.error("Error: Función 'guardar_conversacion_chatbot' no definida en database.py. Asumiendo retorno 0.")
         return jsonify({
             'estado': 'advertencia',
             'mensaje': 'Log de chatbot no guardado. La función "guardar_conversacion_chatbot" no está implementada en database.py.',
             'id_log': 0
         }), 200
     except Exception as e:
-        logger.error(f"❌ Error registrando log del chatbot: {e}")
+        logger.error(f"Error registrando log del chatbot: {e}")
         return jsonify({
             'estado': 'error',
             'mensaje': 'Error registrando log del chatbot'
@@ -812,27 +801,12 @@ def internal_error(error):
 # INICIALIZACIÓN
 # =============================================
 
+def sin_banner(*argumentos, **opciones):
+    """Reemplaza el banner que Flask imprime al arrancar."""
+
+
 if __name__ == '__main__':
-    start_time = datetime.now()
-    
-    print("🌱 " + "="*50)
-    print("🚀 API EcoClasificador v2.0 Iniciando...")
-    print("📡 Endpoints disponibles:")
-    print("   POST /clasificar          - Clasificar imagen (Ahora guarda localmente)")
-    print("   POST /chatbot/log         - Registrar log de conversaciones (NUEVO)")
-    print("   GET  /clasificaciones     - Historial")
-    print("   GET  /estadisticas        - Estadísticas")
-    print("   GET  /guias               - Guías de residuos")
-    print("   GET  /consejos            - Consejos ecológicos")
-    print("   GET  /centros-reciclaje   - Centros de reciclaje")
-    print("   GET  /modelo/info         - Info del modelo IA")
-    print("   GET  /sistema/status      - Estado del sistema")
-    print("🌱 " + "="*50)
-    
-    # Ejecutar servidor
-    app.run(
-        debug=True, 
-        host='0.0.0.0', 
-        port=5000,
-        threaded=True
-    )
+    from flask import cli
+    cli.show_server_banner = sin_banner
+    print("EcoClasificador en http://127.0.0.1:5000  (detalle en runtime/logs/api_ecoclasificador.log)", flush=True)
+    app.run(host='0.0.0.0', port=5000, threaded=True)

@@ -1,118 +1,95 @@
-# clasificador.py - Versión actualizada para TensorFlow 2.16+
-import tensorflow as tf
-import numpy as np
-from PIL import Image
+# clasificador.py - Clasificador de residuos (TensorFlow 2.16+)
 import json
+import logging
 import os
 import time
 from pathlib import Path
 
+# Debe ir antes de importar TensorFlow: oculta sus mensajes informativos de arranque
+os.environ.setdefault('TF_CPP_MIN_LOG_LEVEL', '3')
+
+import numpy as np
+import tensorflow as tf
+from PIL import Image
+
 MODELS_DIR = Path(__file__).resolve().parent.parent / 'models'
+logger = logging.getLogger(__name__)
+
 
 class ClasificadorResiduos:
     def __init__(self, modelo_path=str(MODELS_DIR / 'modelo_final_residuos.h5'), config_path=str(MODELS_DIR / 'configuracion_clases.json')):
-        """Cargar modelo entrenado - Versión compatible con TF 2.16+"""
-        print("🚀 Inicializando Clasificador de Residuos...")
-        start_time = time.time()
-        
+        """Cargar el modelo entrenado y su configuración."""
         try:
-            # Verificar que existen los archivos
             if not os.path.exists(modelo_path):
-                raise FileNotFoundError(f"❌ No se encuentra el modelo: {modelo_path}")
+                raise FileNotFoundError(f"No se encuentra el modelo: {modelo_path}")
             if not os.path.exists(config_path):
-                raise FileNotFoundError(f"❌ No se encuentra la configuración: {config_path}")
-            
-            print("📦 Cargando modelo... (esto puede tomar 20-30 segundos)")
-            
-            # Cargar modelo con compatibilidad
+                raise FileNotFoundError(f"No se encuentra la configuración: {config_path}")
+
             self.model = tf.keras.models.load_model(
-                modelo_path, 
-                compile=False,  # Evitar problemas de compilación
-                safe_mode=False  # Para compatibilidad con modelos más antiguos
+                modelo_path,
+                compile=False,   # evita problemas de compilación con modelos antiguos
+                safe_mode=False  # compatibilidad con modelos más antiguos
             )
-            
-            # Compilar el modelo si es necesario
             self.model.compile(
                 optimizer='adam',
                 loss='categorical_crossentropy',
                 metrics=['accuracy']
             )
-            
-            model_load_time = time.time()
-            print(f"✅ Modelo cargado en {model_load_time - start_time:.1f} segundos")
-            
-            print("⚙️ Cargando configuración...")
+
             with open(config_path, 'r', encoding='utf-8') as f:
                 self.config = json.load(f)
-            
+
             self.class_names = list(self.config['class_indices'].keys())
             self.img_height = self.config['img_height']
             self.img_width = self.config['img_width']
-            
-            total_time = time.time() - start_time
-            print(f"🎯 Clasificador listo en {total_time:.1f} segundos")
-            print(f"📊 Configuración: {len(self.class_names)} clases, {self.img_width}x{self.img_height}px")
-            print(f"🏷️ Clases disponibles: {', '.join(self.class_names)}")
-            
+
         except Exception as e:
-            print(f"❌ Error al inicializar el clasificador: {e}")
-            # Crear un modelo dummy para pruebas
+            logger.error(f"No se pudo cargar el modelo ({e}). Se usa el modo de respaldo: las respuestas NO son reales.")
             self._crear_modelo_dummy()
-    
+
     def _crear_modelo_dummy(self):
-        """Crear modelo dummy para pruebas si el principal falla"""
-        print("⚠️  Creando modelo dummy para continuar...")
+        """Modo de respaldo cuando el modelo no carga (no clasifica de verdad)."""
         self.class_names = ['organic', 'plastic', 'paper', 'glass', 'metal']
         self.img_height = 160
         self.img_width = 160
-        # No creamos un modelo real para evitar dependencias
-    
+
     def clasificar_imagen(self, imagen_path):
         """Clasificar una imagen de residuo"""
         try:
             # Si no hay modelo cargado, usar modo dummy
             if not hasattr(self, 'model') or self.model is None:
                 return self._clasificacion_dummy(imagen_path)
-            
-            # Verificar que existe la imagen
+
             if not os.path.exists(imagen_path):
                 return {
-                    'estado': 'error', 
+                    'estado': 'error',
                     'mensaje': f'La imagen no existe: {imagen_path}'
                 }
-            
-            print(f"🔍 Procesando imagen: {os.path.basename(imagen_path)}")
-            
+
             # Cargar y preprocesar imagen
             img = Image.open(imagen_path).convert('RGB')
             original_size = img.size
             img = img.resize((self.img_width, self.img_height))
             img_array = np.array(img) / 255.0
             img_array = np.expand_dims(img_array, axis=0)
-            
-            print("🤖 Realizando predicción...")
-            start_pred = time.time()
-            
+
             # Predecir
+            start_pred = time.time()
             predicciones = self.model.predict(img_array, verbose=0)
             prediction_time = time.time() - start_pred
-            
+
             clase_idx = np.argmax(predicciones[0])
             confianza = float(np.max(predicciones[0]))
-            
-            # Resultados detallados
+
+            # Resultados detallados, ordenados por confianza
             resultados_todos = {
-                clase: float(conf) 
+                clase: float(conf)
                 for clase, conf in zip(self.class_names, predicciones[0])
             }
-            
-            # Ordenar por confianza
             resultados_ordenados = dict(
                 sorted(resultados_todos.items(), key=lambda x: x[1], reverse=True)
             )
-            
-            print(f"✅ Predicción completada en {prediction_time:.2f} segundos")
-            
+
             return {
                 'estado': 'éxito',
                 'categoria': self.class_names[clase_idx],
@@ -123,18 +100,16 @@ class ClasificadorResiduos:
                 'tamano_original': f"{original_size[0]}x{original_size[1]}",
                 'tamano_procesado': f"{self.img_width}x{self.img_height}"
             }
-            
+
         except Exception as e:
-            error_msg = f"Error al clasificar imagen: {str(e)}"
-            print(f"❌ {error_msg}")
-            return {'estado': 'error', 'mensaje': error_msg}
-    
+            return {'estado': 'error', 'mensaje': f"Error al clasificar imagen: {str(e)}"}
+
     def _clasificacion_dummy(self, imagen_path):
         """Clasificación dummy para cuando no hay modelo"""
         import random
         categoria = random.choice(self.class_names)
         confianza = round(random.uniform(0.7, 0.95), 2)
-        
+
         return {
             'estado': 'éxito',
             'categoria': categoria,
@@ -146,23 +121,23 @@ class ClasificadorResiduos:
             'tamano_procesado': f"{self.img_width}x{self.img_height}",
             'modo_dummy': True
         }
-    
+
     def clasificar_desde_memoria(self, imagen_file):
         """Para uso en APIs web - imagen desde memoria"""
         try:
             # Si no hay modelo, usar dummy
             if not hasattr(self, 'model') or self.model is None:
                 return self._clasificacion_dummy("memoria")
-                
+
             img = Image.open(imagen_file).convert('RGB')
             img = img.resize((self.img_width, self.img_height))
             img_array = np.array(img) / 255.0
             img_array = np.expand_dims(img_array, axis=0)
-            
+
             predicciones = self.model.predict(img_array, verbose=0)
             clase_idx = np.argmax(predicciones[0])
             confianza = float(np.max(predicciones[0]))
-            
+
             return {
                 'estado': 'éxito',
                 'categoria': self.class_names[clase_idx],
@@ -171,11 +146,11 @@ class ClasificadorResiduos:
             }
         except Exception as e:
             return {'estado': 'error', 'mensaje': str(e)}
-    
+
     def obtener_info_modelo(self):
         """Obtener información del modelo"""
         modelo_cargado = hasattr(self, 'model') and self.model is not None
-        
+
         return {
             'clases': self.class_names,
             'tamano_imagen': f"{self.img_width}x{self.img_height}",
@@ -184,38 +159,3 @@ class ClasificadorResiduos:
             'modelo_cargado': modelo_cargado,
             'modo_dummy': not modelo_cargado
         }
-
-# Prueba del clasificador
-if __name__ == "__main__":
-    print("=" * 60)
-    print("🎯 CLASIFICADOR DE RESIDUOS - PRUEBA")
-    print("=" * 60)
-    
-    try:
-        clasificador = ClasificadorResiduos()
-        
-        # Probar con una imagen si existe
-        imagen_prueba = None
-        for archivo in os.listdir('.'):
-            if archivo.lower().endswith(('.jpg', '.png', '.jpeg')):
-                imagen_prueba = archivo
-                break
-        
-        if imagen_prueba:
-            print(f"📸 Probando con: {imagen_prueba}")
-            resultado = clasificador.clasificar_imagen(imagen_prueba)
-            
-            if resultado['estado'] == 'éxito':
-                print(f"🏷️  CATEGORÍA: {resultado['categoria']}")
-                print(f"📊 CONFIANZA: {resultado['confianza']:.2%}")
-                if resultado.get('modo_dummy'):
-                    print("⚠️  MODO DUMMY - Usando clasificación simulada")
-            else:
-                print(f"❌ ERROR: {resultado['mensaje']}")
-        else:
-            print("💡 Coloca una imagen en la carpeta para probar")
-            
-    except Exception as e:
-        print(f"❌ Error general: {e}")
-    
-    print("✅ Prueba completada")

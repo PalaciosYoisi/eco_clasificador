@@ -17,9 +17,7 @@ eco_clasificador-main/
 ├── backend/
 │   ├── app.py              API Flask: endpoints, validación del archivo, registro de visitas
 │   ├── clasificador.py     Carga el modelo y clasifica imágenes
-│   ├── database.py         Acceso a MySQL
-│   ├── config.py           Datos de conexión (referencia)
-│   └── chatbot.py          Chatbot de consola con Gemini (no forma parte de la web)
+│   └── database.py         Acceso a MySQL
 ├── frontend/
 │   ├── index.html          Estructura de la página
 │   ├── css/styles.css      Estilos
@@ -48,7 +46,6 @@ Las rutas del backend (modelo, configuración, `runtime/`) se calculan a partir 
 
 - Python 3.12 (probado con 3.12; TensorFlow 2.16 o superior).
 - MySQL, por ejemplo con XAMPP. La conexión está en `backend/database.py`: host `localhost`, puerto `3307`, usuario `root`, sin contraseña y base de datos `ecoclasificador_db`. Cambia estos valores si tu instalación es distinta.
-- Para el chatbot de consola (opcional): una clave de la API de Gemini.
 
 ## Instalación
 
@@ -68,6 +65,8 @@ pip install -r requirements.txt
 python backend/app.py
 ```
 
+La terminal solo muestra una línea al arrancar y, después, avisos y errores (por ejemplo, si MySQL está apagado). El detalle de cada petición queda en `runtime/logs/api_ecoclasificador.log`. El servidor corre sin modo debug, así que no se recarga solo al editar el código: hay que reiniciarlo.
+
 **3. Abrir la página.** Se recomienda servirla por HTTP, porque algunos navegadores restringen los archivos externos cuando se abre `index.html` con doble clic:
 
 ```bash
@@ -77,6 +76,8 @@ python -m http.server 5500 --directory frontend
 Luego abrir http://localhost:5500. La página llama a la API en `http://127.0.0.1:5000` (constante `API_BASE_URL` en `frontend/js/app.js`).
 
 Si MySQL está apagado, la API arranca, pero los endpoints que usan la base de datos (guardar clasificaciones, guías, estadísticas) no funcionarán.
+
+El chatbot de la página es un menú escrito en JavaScript (`frontend/js/app.js`) que consulta los endpoints `/guias`, `/consejos` y `/centros-reciclaje`; no usa ninguna API externa.
 
 ### Endpoints principales
 
@@ -110,7 +111,7 @@ Esta sección explica **qué se probó, cómo se probó, qué resultado se obtuv
 | Casos de prueba | **50** |
 | Resultado | **43 pasan y 7 fallan** |
 | Defectos encontrados | **4** (H-01 a H-04), que explican los 7 fallos |
-| Cobertura | 41 % (65 % en `clasificador.py`, 33 % en `app.py`) |
+| Cobertura | 45 % (88 % en `clasificador.py`, 35 % en `app.py`) |
 | Herramienta | pytest 9.0.3 y pytest-cov 7.1.0 (Python 3.12, Windows 11) |
 | Tiempo de ejecución | unos 2 segundos |
 
@@ -449,9 +450,9 @@ Una vez corregido cada defecto, se vuelve a ejecutar la misma prueba, sin cambio
 
 | Módulo | Sentencias | Sin probar | Cobertura | Lo que queda sin probar |
 |---|---|---|---|---|
-| `backend/clasificador.py` | 112 | 39 | 65 % | La carga real del modelo, `obtener_info_modelo()` y el bloque de prueba manual del final del archivo |
-| `backend/app.py` | 329 | 220 | 33 % | Las rutas de información (guías, consejos, centros, noticias), historial, estadísticas, feedback y chatbot |
-| **Total** | 441 | 259 | **41 %** | |
+| `backend/clasificador.py` | 75 | 9 | 88 % | La carga real del modelo y `obtener_info_modelo()` |
+| `backend/app.py` | 322 | 208 | 35 % | Las rutas de información (guías, consejos, centros, noticias), historial, estadísticas, feedback y chatbot |
+| **Total** | 397 | 217 | **45 %** | |
 
 La cobertura de `app.py` es baja a propósito: el plan deja por fuera todo lo que no es clasificación. Además, la cobertura indica qué líneas se ejecutaron, **no si el código es correcto**: 100 % no significa que el programa esté bien, y subir la cifra con pruebas sin verificaciones sería engañarse. Por eso lo que se evalúa es la tabla de casos, y la cobertura sirve para encontrar el código que nadie está probando.
 

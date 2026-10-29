@@ -2,11 +2,15 @@
 import mysql.connector
 from mysql.connector import Error
 import json
+import logging
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 class DatabaseManager:
     def __init__(self):
         self.connection = None
+        self._aviso_mostrado = False    # el aviso de "sin MySQL" se muestra una sola vez
         self.connect()
     
     def connect(self):
@@ -20,10 +24,10 @@ class DatabaseManager:
                 database='ecoclasificador_db',
                 autocommit=True
             )
-            print("✅ Conectado a la base de datos MySQL")
-            
         except Error as e:
-            print(f"❌ Error conectando a MySQL: {e}")
+            if not self._aviso_mostrado:
+                logger.warning(f"No se pudo conectar a MySQL: {e}")
+                self._aviso_mostrado = True
             self.connection = None
     
     def is_connected(self):
@@ -39,7 +43,7 @@ class DatabaseManager:
                 self.connect()
             return self.is_connected()
         except Error as e:
-            print(f"❌ Error reconectando: {e}")
+            logger.error(f"Error reconectando: {e}")
             return False
     
     def guardar_clasificacion(self, nombre_archivo, categoria, confianza, datos_resultado):
@@ -59,7 +63,7 @@ class DatabaseManager:
             return id_clasificacion
             
         except Error as e:
-            print(f"❌ Error guardando clasificación: {e}")
+            logger.error(f"Error guardando clasificación: {e}")
             return None
     
     def obtener_guia_residuo(self, categoria):
@@ -78,7 +82,7 @@ class DatabaseManager:
             return resultado
             
         except Error as e:
-            print(f"❌ Error obteniendo guía: {e}")
+            logger.error(f"Error obteniendo guía: {e}")
             return None
     
     def obtener_estadisticas(self):
@@ -111,7 +115,7 @@ class DatabaseManager:
             }
             
         except Error as e:
-            print(f"❌ Error obteniendo estadísticas: {e}")
+            logger.error(f"Error obteniendo estadísticas: {e}")
             return None
     
     def obtener_consejos(self, limite=10, categoria=None):
@@ -142,7 +146,7 @@ class DatabaseManager:
             return consejos
             
         except Error as e:
-            print(f"❌ Error obteniendo consejos: {e}")
+            logger.error(f"Error obteniendo consejos: {e}")
             return []
     
     def obtener_centros_reciclaje(self, ciudad=None):
@@ -171,7 +175,7 @@ class DatabaseManager:
             return centros
             
         except Error as e:
-            print(f"❌ Error obteniendo centros: {e}")
+            logger.error(f"Error obteniendo centros: {e}")
             return []
     
     def obtener_noticias(self, limite=5, destacadas=False):
@@ -202,7 +206,7 @@ class DatabaseManager:
             return noticias
             
         except Error as e:
-            print(f"❌ Error obteniendo noticias: {e}")
+            logger.error(f"Error obteniendo noticias: {e}")
             return []
     
     def guardar_feedback(self, clasificacion_id, fue_correcta, categoria_correcta=None, comentario=None):
@@ -222,17 +226,13 @@ class DatabaseManager:
             return True
             
         except Error as e:
-            print(f"❌ Error guardando feedback: {e}")
+            logger.error(f"Error guardando feedback: {e}")
             return False
     
     def close(self):
         """Cerrar conexión"""
         if self.connection and self.connection.is_connected():
             self.connection.close()
-            print("✅ Conexión a MySQL cerrada")
-            
-            
-        # Dentro de la clase DatabaseManager en database.py
 
     def guardar_conversacion_chatbot(self, fecha_log, user_input, bot_response, endpoint_hit):
         """Guarda un registro de la conversación del chatbot."""
@@ -257,36 +257,5 @@ class DatabaseManager:
             return log_id
             
         except Error as e:
-            print(f"❌ Error guardando log del chatbot: {e}")
+            logger.error(f"Error guardando log del chatbot: {e}")
             return 0
-
-# Función de prueba
-def test_connection():
-    """Probar la conexión a la base de datos"""
-    try:
-        db = DatabaseManager()
-        
-        if db.is_connected():
-            print("✅ Conexión exitosa a la base de datos")
-            
-            # Probar algunas consultas básicas
-            stats = db.obtener_estadisticas()
-            if stats:
-                print(f"📊 Total clasificaciones: {stats['total_clasificaciones']}")
-            
-            consejos = db.obtener_consejos(limite=3)
-            print(f"💡 Consejos disponibles: {len(consejos)}")
-            
-            db.close()
-            return True
-        else:
-            print("❌ No se pudo conectar a la base de datos")
-            return False
-            
-    except Exception as e:
-        print(f"❌ Error en prueba de conexión: {e}")
-        return False
-
-if __name__ == "__main__":
-    print("🔍 Probando conexión a la base de datos...")
-    test_connection()
